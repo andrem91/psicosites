@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 PsiBuilder
 
-## Getting Started
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?logo=supabase)](https://supabase.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)](https://typescriptlang.org/)
 
-First, run the development server:
+**Plataforma SaaS para criação de sites profissionais para psicólogos e terapeutas.**
+
+## 🎯 Sobre o Projeto
+
+O PsiBuilder é uma solução "no-code" que permite psicólogos criarem sites profissionais em 5 minutos, com:
+
+- ✅ **Compliance automático** com normas do CFP
+- 🚀 **SEO técnico** otimizado para captação de pacientes
+- 💬 **Conversão via WhatsApp** com tracking
+- 📱 **Design mobile-first** e responsivo
+- 📝 **Blog integrado** para marketing de conteúdo
+
+## 🛠️ Stack Tecnológica
+
+| Tecnologia | Uso |
+|------------|-----|
+| Next.js 16 | Frontend + App Router |
+| Tailwind CSS 4 | Estilização |
+| Supabase | Auth, Database, Storage |
+| Sanity.io | CMS para Blog |
+| Asaas | Gateway de Pagamentos |
+| Vercel | Hospedagem |
+
+## 🚀 Começando
+
+### Pré-requisitos
+- Node.js 18+
+- Docker Desktop
+- Git
+
+### Instalação
 
 ```bash
+# Clonar repositório
+git clone https://github.com/seu-usuario/psibuilder.git
+cd psibuilder/app
+
+# Instalar dependências
+npm install
+
+# Iniciar Supabase local
+npx supabase start
+
+# Aplicar schema do banco
+docker exec -i supabase_db_app psql -U postgres -d postgres < supabase/schema.sql
+
+# Iniciar desenvolvimento
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Variáveis de Ambiente
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copie `.env.example` para `.env.local` e configure:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave_aqui
+```
 
-## Learn More
+## 📁 Estrutura do Projeto
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+├── src/
+│   ├── app/           # Páginas (App Router)
+│   ├── components/    # Componentes React
+│   │   └── ui/       # Componentes UI
+│   ├── hooks/        # Custom hooks
+│   ├── lib/          # Utilitários e Supabase
+│   ├── styles/       # Estilos customizados
+│   ├── types/        # Tipos TypeScript
+│   └── middleware.ts # Proteção de rotas
+├── supabase/
+│   └── schema.sql    # Schema do banco
+└── public/           # Assets estáticos
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔗 URLs Locais (Desenvolvimento)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Serviço | URL |
+|---------|-----|
+| Next.js | http://localhost:3000 |
+| Supabase Studio | http://127.0.0.1:54323 |
+| API Supabase | http://127.0.0.1:54321 |
+| Mailpit (emails) | http://127.0.0.1:54324 |
 
-## Deploy on Vercel
+## 📄 Licença
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Projeto privado - Todos os direitos reservados.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+Desenvolvido com 💜 para a comunidade de psicólogos brasileiros.
