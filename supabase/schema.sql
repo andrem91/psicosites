@@ -1,98 +1,144 @@
 -- =============================================
--- PsiBuilder Database Schema
--- Versão: 1.0
+-- PsiBuilder - Schema do Banco de Dados
+-- Versão: 2.0 (Consolidado)
+-- Data: Dezembro 2024
+-- 
+-- Inclui: Tabelas, Índices, RLS, Triggers
+-- Removido: content_library (simplificação MVP)
 -- =============================================
 
--- Habilitar extensões
+-- ======================
+-- EXTENSÕES
+-- ======================
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- =============================================
--- TABELA: profiles
+-- ======================
+-- TABELA: PROFILES
 -- Dados do psicólogo
--- =============================================
-CREATE TABLE profiles (
+-- ======================
+CREATE TABLE IF NOT EXISTS profiles (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL UNIQUE,
-    full_name TEXT NOT NULL,
-    crp TEXT NOT NULL,
-    crp_verified BOOLEAN DEFAULT FALSE,
-    photo_url TEXT,
-    bio TEXT,
-    whatsapp TEXT NOT NULL,
-    email TEXT NOT NULL,
+    full_name TEXT NOT NULL DEFAULT '',
+    email TEXT NOT NULL DEFAULT '',
+    whatsapp TEXT DEFAULT '',
+    crp TEXT DEFAULT '',
     specialties TEXT[] DEFAULT '{}',
-    approach TEXT NOT NULL DEFAULT 'integrativa',
-    approach_description TEXT,
-    city TEXT,
-    state TEXT,
-    online_service BOOLEAN DEFAULT TRUE,
-    in_person_service BOOLEAN DEFAULT FALSE,
+    bio TEXT DEFAULT '',
+    profile_image_url TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Index para busca por CRP
-CREATE INDEX idx_profiles_crp ON profiles(crp);
+-- Índices
+CREATE INDEX IF NOT EXISTS idx_profiles_user_id ON profiles(user_id);
+CREATE INDEX IF NOT EXISTS idx_profiles_crp ON profiles(crp);
 
--- =============================================
--- TABELA: sites
+-- RLS
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Usuários podem ver seu próprio perfil"
+    ON profiles FOR SELECT
+    USING ((select auth.uid()) = user_id);
+
+CREATE POLICY "Usuários podem atualizar seu próprio perfil"
+    ON profiles FOR UPDATE
+    USING ((select auth.uid()) = user_id);
+
+CREATE POLICY "Usuários podem criar seu próprio perfil"
+    ON profiles FOR INSERT
+    WITH CHECK ((select auth.uid()) = user_id);
+
+-- ======================
+-- TABELA: SITES
 -- Configuração do site do psicólogo
--- =============================================
-CREATE TABLE sites (
+-- ======================
+CREATE TABLE IF NOT EXISTS sites (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     profile_id UUID REFERENCES profiles(id) ON DELETE CASCADE NOT NULL UNIQUE,
-    subdomain TEXT NOT NULL UNIQUE,
+    subdomain TEXT UNIQUE NOT NULL,
     custom_domain TEXT UNIQUE,
-    domain_verified BOOLEAN DEFAULT FALSE,
-    theme_id TEXT DEFAULT 'default',
-    primary_color TEXT DEFAULT '#6366f1',
-    secondary_color TEXT DEFAULT '#8b5cf6',
-    font_family TEXT DEFAULT 'Inter',
-    hero_headline TEXT,
-    hero_subheadline TEXT,
-    about_text TEXT,
-    show_blog BOOLEAN DEFAULT FALSE,
-    show_faq BOOLEAN DEFAULT TRUE,
-    ga_measurement_id TEXT,
     is_published BOOLEAN DEFAULT FALSE,
+    site_title TEXT,
+    meta_description TEXT,
+    meta_keywords TEXT,
+    theme_config JSONB DEFAULT '{"primaryColor": "#6366f1", "backgroundColor": "#ffffff", "fontFamily": "Inter"}',
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Indexes para busca por domínio
-CREATE INDEX idx_sites_subdomain ON sites(subdomain);
-CREATE INDEX idx_sites_custom_domain ON sites(custom_domain);
+-- Índices
+CREATE INDEX IF NOT EXISTS idx_sites_profile_id ON sites(profile_id);
+CREATE INDEX IF NOT EXISTS idx_sites_subdomain ON sites(subdomain);
+CREATE INDEX IF NOT EXISTS idx_sites_custom_domain ON sites(custom_domain);
 
--- =============================================
--- TABELA: subscriptions
--- Assinaturas e planos
--- =============================================
-CREATE TABLE subscriptions (
+-- RLS
+ALTER TABLE sites ENABLE ROW LEVEL SECURITY;
+
+-- SELECT: Sites publicados são públicos OU próprio usuário pode ver
+CREATE POLICY "Acesso a sites"
+    ON sites FOR SELECT
+    USING (
+        is_published = true 
+        OR (select auth.uid()) = (SELECT user_id FROM profiles WHERE id = profile_id)
+    );
+
+-- INSERT: Apenas próprio usuário
+CREATE POLICY "Usuários podem criar site"
+    ON sites FOR INSERT
+    WITH CHECK ((select auth.uid()) = (SELECT user_id FROM profiles WHERE id = profile_id));
+
+-- UPDATE: Apenas próprio usuário
+CREATE POLICY "Usuários podem atualizar site"
+    ON sites FOR UPDATE
+    USING ((select auth.uid()) = (SELECT user_id FROM profiles WHERE id = profile_id));
+
+-- DELETE: Apenas próprio usuário
+CREATE POLICY "Usuários podem deletar site"
+    ON sites FOR DELETE
+    USING ((select auth.uid()) = (SELECT user_id FROM profiles WHERE id = profile_id));
+
+-- ======================
+-- TABELA: SUBSCRIPTIONS
+-- Assinaturas e planos (integração Asaas)
+-- ======================
+CREATE TABLE IF NOT EXISTS subscriptions (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL UNIQUE,
+    plan TEXT NOT NULL DEFAULT 'free' CHECK (plan IN ('free', 'pro', 'enterprise')),
+    status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'inactive', 'pending', 'cancelled')),
     asaas_customer_id TEXT,
     asaas_subscription_id TEXT,
-    plan TEXT DEFAULT 'free' CHECK (plan IN ('free', 'professional', 'authority', 'clinic')),
-    status TEXT DEFAULT 'active' CHECK (status IN ('active', 'canceled', 'past_due', 'trialing')),
     current_period_start TIMESTAMPTZ,
     current_period_end TIMESTAMPTZ,
-    cancel_at_period_end BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Index para busca por Asaas IDs
-CREATE INDEX idx_subscriptions_asaas_customer ON subscriptions(asaas_customer_id);
-CREATE INDEX idx_subscriptions_asaas_subscription ON subscriptions(asaas_subscription_id);
+-- Índices
+CREATE INDEX IF NOT EXISTS idx_subscriptions_user_id ON subscriptions(user_id);
+CREATE INDEX IF NOT EXISTS idx_subscriptions_asaas_customer ON subscriptions(asaas_customer_id);
+CREATE INDEX IF NOT EXISTS idx_subscriptions_asaas_subscription ON subscriptions(asaas_subscription_id);
 
--- =============================================
--- TABELA: site_analytics
--- Métricas de cada site
--- =============================================
-CREATE TABLE site_analytics (
+-- RLS
+ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Acesso a assinaturas"
+    ON subscriptions FOR SELECT
+    USING ((select auth.uid()) = user_id);
+
+CREATE POLICY "Usuários podem atualizar assinatura"
+    ON subscriptions FOR UPDATE
+    USING ((select auth.uid()) = user_id);
+
+-- ======================
+-- TABELA: SITE_ANALYTICS
+-- Métricas diárias do site
+-- ======================
+CREATE TABLE IF NOT EXISTS site_analytics (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     site_id UUID REFERENCES sites(id) ON DELETE CASCADE NOT NULL,
-    date DATE NOT NULL,
+    date DATE NOT NULL DEFAULT CURRENT_DATE,
     page_views INTEGER DEFAULT 0,
     unique_visitors INTEGER DEFAULT 0,
     whatsapp_clicks INTEGER DEFAULT 0,
@@ -100,21 +146,35 @@ CREATE TABLE site_analytics (
     UNIQUE(site_id, date)
 );
 
--- Index para consultas por data
-CREATE INDEX idx_site_analytics_date ON site_analytics(site_id, date DESC);
+-- Índices
+CREATE INDEX IF NOT EXISTS idx_site_analytics_site_id ON site_analytics(site_id);
+CREATE INDEX IF NOT EXISTS idx_site_analytics_date ON site_analytics(date);
 
--- =============================================
--- TABELA: blog_posts
--- Artigos do blog
--- =============================================
-CREATE TABLE blog_posts (
+-- RLS
+ALTER TABLE site_analytics ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Usuários podem ver analytics do seu site"
+    ON site_analytics FOR SELECT
+    USING (
+        site_id IN (
+            SELECT s.id FROM sites s
+            JOIN profiles p ON s.profile_id = p.id
+            WHERE p.user_id = (select auth.uid())
+        )
+    );
+
+-- ======================
+-- TABELA: BLOG_POSTS
+-- Artigos do blog do psicólogo
+-- ======================
+CREATE TABLE IF NOT EXISTS blog_posts (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     site_id UUID REFERENCES sites(id) ON DELETE CASCADE NOT NULL,
     title TEXT NOT NULL,
     slug TEXT NOT NULL,
+    content TEXT,
     excerpt TEXT,
-    content TEXT NOT NULL,
-    cover_image TEXT,
+    featured_image_url TEXT,
     is_published BOOLEAN DEFAULT FALSE,
     published_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -122,153 +182,140 @@ CREATE TABLE blog_posts (
     UNIQUE(site_id, slug)
 );
 
--- Index para busca por slug
-CREATE INDEX idx_blog_posts_slug ON blog_posts(site_id, slug);
+-- Índices
+CREATE INDEX IF NOT EXISTS idx_blog_posts_site_id ON blog_posts(site_id);
+CREATE INDEX IF NOT EXISTS idx_blog_posts_slug ON blog_posts(slug);
 
--- =============================================
--- TABELA: faq_items
--- Perguntas frequentes
--- =============================================
-CREATE TABLE faq_items (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    site_id UUID REFERENCES sites(id) ON DELETE CASCADE NOT NULL,
-    question TEXT NOT NULL,
-    answer TEXT NOT NULL,
-    "order" INTEGER DEFAULT 0,
-    created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- =============================================
--- TABELA: content_library
--- Biblioteca de conteúdos (textos modelo)
--- =============================================
-CREATE TABLE content_library (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    title TEXT NOT NULL,
-    category TEXT NOT NULL,
-    content TEXT NOT NULL,
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- =============================================
--- ROW LEVEL SECURITY (RLS)
--- =============================================
-
--- Habilitar RLS em todas as tabelas
-ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
-ALTER TABLE sites ENABLE ROW LEVEL SECURITY;
-ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
-ALTER TABLE site_analytics ENABLE ROW LEVEL SECURITY;
+-- RLS
 ALTER TABLE blog_posts ENABLE ROW LEVEL SECURITY;
-ALTER TABLE faq_items ENABLE ROW LEVEL SECURITY;
 
--- Políticas para profiles
-CREATE POLICY "Usuários podem ver seu próprio perfil"
-    ON profiles FOR SELECT
-    USING (auth.uid() = user_id);
-
-CREATE POLICY "Usuários podem atualizar seu próprio perfil"
-    ON profiles FOR UPDATE
-    USING (auth.uid() = user_id);
-
-CREATE POLICY "Usuários podem criar seu próprio perfil"
-    ON profiles FOR INSERT
-    WITH CHECK (auth.uid() = user_id);
-
--- Sites públicos podem ser visualizados por todos
-CREATE POLICY "Sites publicados são públicos"
-    ON sites FOR SELECT
-    USING (is_published = true OR auth.uid() = (SELECT user_id FROM profiles WHERE id = profile_id));
-
-CREATE POLICY "Usuários podem gerenciar seu site"
-    ON sites FOR ALL
-    USING (auth.uid() = (SELECT user_id FROM profiles WHERE id = profile_id));
-
--- Políticas para subscriptions
-CREATE POLICY "Usuários podem ver sua assinatura"
-    ON subscriptions FOR SELECT
-    USING (auth.uid() = user_id);
-
-CREATE POLICY "Usuários podem gerenciar sua assinatura"
-    ON subscriptions FOR ALL
-    USING (auth.uid() = user_id);
-
--- Políticas para analytics
-CREATE POLICY "Usuários podem ver analytics do seu site"
-    ON site_analytics FOR SELECT
-    USING (
-        site_id IN (
-            SELECT s.id FROM sites s
-            JOIN profiles p ON s.profile_id = p.id
-            WHERE p.user_id = auth.uid()
-        )
-    );
-
--- Políticas para blog_posts
-CREATE POLICY "Posts publicados são públicos"
+-- SELECT: Posts publicados OU próprio usuário
+CREATE POLICY "Acesso a posts"
     ON blog_posts FOR SELECT
     USING (
         is_published = true OR
         site_id IN (
             SELECT s.id FROM sites s
             JOIN profiles p ON s.profile_id = p.id
-            WHERE p.user_id = auth.uid()
+            WHERE p.user_id = (select auth.uid())
         )
     );
 
-CREATE POLICY "Usuários podem gerenciar posts do seu site"
-    ON blog_posts FOR ALL
+-- INSERT
+CREATE POLICY "Usuários podem criar posts"
+    ON blog_posts FOR INSERT
+    WITH CHECK (
+        site_id IN (
+            SELECT s.id FROM sites s
+            JOIN profiles p ON s.profile_id = p.id
+            WHERE p.user_id = (select auth.uid())
+        )
+    );
+
+-- UPDATE
+CREATE POLICY "Usuários podem atualizar posts"
+    ON blog_posts FOR UPDATE
     USING (
         site_id IN (
             SELECT s.id FROM sites s
             JOIN profiles p ON s.profile_id = p.id
-            WHERE p.user_id = auth.uid()
+            WHERE p.user_id = (select auth.uid())
         )
     );
 
--- Políticas para faq_items
-CREATE POLICY "FAQ é público para sites publicados"
+-- DELETE
+CREATE POLICY "Usuários podem deletar posts"
+    ON blog_posts FOR DELETE
+    USING (
+        site_id IN (
+            SELECT s.id FROM sites s
+            JOIN profiles p ON s.profile_id = p.id
+            WHERE p.user_id = (select auth.uid())
+        )
+    );
+
+-- ======================
+-- TABELA: FAQ_ITEMS
+-- Perguntas frequentes do site
+-- ======================
+CREATE TABLE IF NOT EXISTS faq_items (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    site_id UUID REFERENCES sites(id) ON DELETE CASCADE NOT NULL,
+    question TEXT NOT NULL,
+    answer TEXT NOT NULL,
+    order_index INTEGER DEFAULT 0,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Índices
+CREATE INDEX IF NOT EXISTS idx_faq_items_site_id ON faq_items(site_id);
+
+-- RLS
+ALTER TABLE faq_items ENABLE ROW LEVEL SECURITY;
+
+-- SELECT: FAQ público para sites publicados OU próprio usuário
+CREATE POLICY "Acesso a FAQ"
     ON faq_items FOR SELECT
     USING (
         site_id IN (SELECT id FROM sites WHERE is_published = true) OR
         site_id IN (
             SELECT s.id FROM sites s
             JOIN profiles p ON s.profile_id = p.id
-            WHERE p.user_id = auth.uid()
+            WHERE p.user_id = (select auth.uid())
         )
     );
 
-CREATE POLICY "Usuários podem gerenciar FAQ do seu site"
-    ON faq_items FOR ALL
+-- INSERT
+CREATE POLICY "Usuários podem criar FAQ"
+    ON faq_items FOR INSERT
+    WITH CHECK (
+        site_id IN (
+            SELECT s.id FROM sites s
+            JOIN profiles p ON s.profile_id = p.id
+            WHERE p.user_id = (select auth.uid())
+        )
+    );
+
+-- UPDATE
+CREATE POLICY "Usuários podem atualizar FAQ"
+    ON faq_items FOR UPDATE
     USING (
         site_id IN (
             SELECT s.id FROM sites s
             JOIN profiles p ON s.profile_id = p.id
-            WHERE p.user_id = auth.uid()
+            WHERE p.user_id = (select auth.uid())
         )
     );
 
--- Biblioteca de conteúdo é pública para leitura
-CREATE POLICY "Biblioteca é pública para leitura"
-    ON content_library FOR SELECT
-    USING (is_active = true);
+-- DELETE
+CREATE POLICY "Usuários podem deletar FAQ"
+    ON faq_items FOR DELETE
+    USING (
+        site_id IN (
+            SELECT s.id FROM sites s
+            JOIN profiles p ON s.profile_id = p.id
+            WHERE p.user_id = (select auth.uid())
+        )
+    );
 
--- =============================================
--- TRIGGERS
--- =============================================
+-- ======================
+-- FUNÇÕES E TRIGGERS
+-- ======================
 
--- Função para atualizar updated_at
-CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $$
+-- Função para atualizar updated_at automaticamente
+CREATE OR REPLACE FUNCTION public.update_updated_at_column()
+RETURNS TRIGGER 
+SECURITY DEFINER
+SET search_path = public
+AS $$
 BEGIN
     NEW.updated_at = NOW();
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
--- Aplicar trigger em tabelas com updated_at
+-- Triggers para updated_at
 CREATE TRIGGER update_profiles_updated_at
     BEFORE UPDATE ON profiles
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
@@ -285,18 +332,22 @@ CREATE TRIGGER update_blog_posts_updated_at
     BEFORE UPDATE ON blog_posts
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_content_library_updated_at
-    BEFORE UPDATE ON content_library
+CREATE TRIGGER update_faq_items_updated_at
+    BEFORE UPDATE ON faq_items
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
--- =============================================
--- FUNÇÃO: Criar perfil e assinatura ao registrar
--- =============================================
-CREATE OR REPLACE FUNCTION handle_new_user()
-RETURNS TRIGGER AS $$
+-- ======================
+-- TRIGGER: AUTO-CREATE PROFILE E SUBSCRIPTION
+-- Quando um novo usuário é criado no Auth
+-- ======================
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER 
+SECURITY DEFINER
+SET search_path = public
+AS $$
 BEGIN
     -- Criar perfil básico
-    INSERT INTO profiles (user_id, full_name, email, whatsapp, crp)
+    INSERT INTO public.profiles (user_id, full_name, email, whatsapp, crp)
     VALUES (
         NEW.id,
         COALESCE(NEW.raw_user_meta_data->>'full_name', 'Novo Psicólogo'),
@@ -306,14 +357,18 @@ BEGIN
     );
     
     -- Criar assinatura gratuita
-    INSERT INTO subscriptions (user_id, plan, status)
+    INSERT INTO public.subscriptions (user_id, plan, status)
     VALUES (NEW.id, 'free', 'active');
     
     RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql;
 
--- Trigger para novos usuários
+-- Trigger no auth.users
 CREATE TRIGGER on_auth_user_created
     AFTER INSERT ON auth.users
-    FOR EACH ROW EXECUTE FUNCTION handle_new_user();
+    FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
+-- ======================
+-- FIM DO SCHEMA
+-- ======================
