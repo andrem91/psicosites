@@ -80,18 +80,19 @@ export default function LandingPage() {
               </div>
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 text-indigo-700 rounded-full text-sm font-medium">
                 <span className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" />
-                Feito especialmente para psicólogos
+                Adequado às normas do CRP
               </div>
             </div>
 
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight mb-6">
-              Crie seu site profissional em{" "}
+              Tenha sua agenda cheia e mais autoridade com um{" "}
               <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                minutos
+                site profissional
               </span>
             </h1>
 
             <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+              Seu site perfeito em qualquer celular ou computador.
               Pare de perder pacientes por não ter presença online.
               Com o PsiBuilder, você cria um site bonito e profissional sem precisar de conhecimento técnico.
             </p>
@@ -101,7 +102,7 @@ export default function LandingPage() {
                 href="/cadastro"
                 className="px-8 py-4 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300"
               >
-                Começar gratuitamente
+                Quero meu site agora
               </Link>
               <a
                 href="#preview"
@@ -174,7 +175,7 @@ export default function LandingPage() {
               <ul className="space-y-4">
                 <li className="flex items-start gap-3 text-gray-600">
                   <span className="text-green-500 mt-1">✓</span>
-                  <span>Apareça no Google quando pacientes procuram</span>
+                  <span>Apareça no Google para pacientes da sua cidade</span>
                 </li>
                 <li className="flex items-start gap-3 text-gray-600">
                   <span className="text-green-500 mt-1">✓</span>
@@ -479,20 +480,20 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
             <div>
-              <p className="text-4xl md:text-5xl font-bold mb-2">500+</p>
-              <p className="text-indigo-200">Psicólogos ativos</p>
+              <p className="text-4xl md:text-5xl font-bold mb-2">CRP</p>
+              <p className="text-indigo-200">Adequado às normas</p>
             </div>
             <div>
               <p className="text-4xl md:text-5xl font-bold mb-2">5min</p>
               <p className="text-indigo-200">Tempo médio de criação</p>
             </div>
             <div>
-              <p className="text-4xl md:text-5xl font-bold mb-2">3x</p>
-              <p className="text-indigo-200">Mais contatos recebidos</p>
+              <p className="text-4xl md:text-5xl font-bold mb-2">Foco</p>
+              <p className="text-indigo-200">Total no paciente</p>
             </div>
             <div>
-              <p className="text-4xl md:text-5xl font-bold mb-2">98%</p>
-              <p className="text-indigo-200">Satisfação dos clientes</p>
+              <p className="text-4xl md:text-5xl font-bold mb-2">100%</p>
+              <p className="text-indigo-200">Segurança de dados</p>
             </div>
           </div>
         </div>
@@ -585,14 +586,13 @@ export default function LandingPage() {
               {/* Ancoragem de Preço */}
               <div className="mb-6">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-indigo-300 line-through text-xl">R$ 97</span>
-                  <span className="bg-green-400 text-green-900 text-xs font-bold px-2 py-1 rounded-full">-50%</span>
+                  <span className="bg-green-400 text-green-900 text-xs font-bold px-2 py-1 rounded-full">Oferta Especial</span>
                 </div>
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl font-bold">R$ 49</span>
                   <span className="text-indigo-200">/mês</span>
                 </div>
-                <p className="text-xs text-indigo-300 mt-2">💰 Economia de R$ 576/ano</p>
+                <p className="text-xs text-indigo-300 mt-2">💎 Menos de 1/4 do valor de uma sessão</p>
               </div>
 
               <ul className="space-y-4 mb-8">
@@ -832,7 +832,7 @@ export default function LandingPage() {
             href="/cadastro"
             className="inline-block px-10 py-5 bg-white text-indigo-600 font-bold text-lg rounded-xl hover:bg-gray-100 transition-colors shadow-xl"
           >
-            Criar meu site gratuitamente
+            Quero meu site agora
           </Link>
 
           <p className="mt-6 text-indigo-200 text-sm">

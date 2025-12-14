@@ -6,6 +6,9 @@ import { Input } from "@/components/ui/input";
 import { ProfileImageUpload } from "@/components/ui/profile-image-upload";
 import { LogoUpload } from "@/components/ui/logo-upload";
 import { RichTextEditor } from "@/components/ui/rich-text-editor";
+import { FAQEditor } from "@/components/site/faq-editor";
+import { EthicsEditor } from "@/components/site/ethics-editor";
+import { TestimonialsEditor } from "@/components/site/testimonials-editor";
 import { updateProfile, updateSiteConfig, togglePublishSite } from "./actions";
 
 // Paleta de cores adequada para psicólogos
@@ -53,12 +56,15 @@ interface SiteEditorProps {
             backgroundColor: string;
             fontFamily: string;
         };
+        show_ethics_section?: boolean;
+        ethics_content?: string;
+        show_lgpd_section?: boolean;
     };
 }
 
 export function SiteEditor({ profile, site }: SiteEditorProps) {
     const [isPending, startTransition] = useTransition();
-    const [activeTab, setActiveTab] = useState<"profile" | "attendance" | "theme" | "seo">("profile");
+    const [activeTab, setActiveTab] = useState<"profile" | "attendance" | "theme" | "seo" | "ethics" | "faq" | "testimonials">("profile");
     const [success, setSuccess] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
@@ -241,6 +247,9 @@ export function SiteEditor({ profile, site }: SiteEditorProps) {
                         { id: "attendance", label: "Atendimento" },
                         { id: "theme", label: "Tema" },
                         { id: "seo", label: "SEO" },
+                        { id: "ethics", label: "Ética/LGPD" },
+                        { id: "faq", label: "FAQ" },
+                        { id: "testimonials", label: "Depoimentos" },
                     ].map((tab) => (
                         <button
                             key={tab.id}
@@ -689,6 +698,44 @@ export function SiteEditor({ profile, site }: SiteEditorProps) {
                                 </Button>
                             </div>
                         </div>
+                    )}
+
+                    {/* Tab Ética/LGPD */}
+                    {activeTab === "ethics" && (
+                        <EthicsEditor
+                            showEthics={site.show_ethics_section ?? true}
+                            ethicsContent={site.ethics_content || ""}
+                            showLgpd={site.show_lgpd_section ?? true}
+                            onSave={async (data) => {
+                                try {
+                                    const res = await fetch("/api/site/ethics", {
+                                        method: "PUT",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify(data),
+                                    });
+                                    if (res.ok) {
+                                        setSuccess("Configurações salvas com sucesso!");
+                                        setTimeout(() => setSuccess(null), 3000);
+                                    } else {
+                                        setError("Erro ao salvar configurações");
+                                        setTimeout(() => setError(null), 3000);
+                                    }
+                                } catch {
+                                    setError("Erro ao salvar configurações");
+                                    setTimeout(() => setError(null), 3000);
+                                }
+                            }}
+                        />
+                    )}
+
+                    {/* Tab FAQ */}
+                    {activeTab === "faq" && (
+                        <FAQEditor siteId={site.id} />
+                    )}
+
+                    {/* Tab Depoimentos */}
+                    {activeTab === "testimonials" && (
+                        <TestimonialsEditor siteId={site.id} />
                     )}
                 </div>
             </div>

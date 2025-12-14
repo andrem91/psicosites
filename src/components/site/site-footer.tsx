@@ -6,6 +6,7 @@ interface SiteFooterProps {
     email?: string;
     whatsapp?: string;
     primaryColor?: string;
+    showLgpd?: boolean;
 }
 
 export function SiteFooter({
@@ -14,6 +15,7 @@ export function SiteFooter({
     email,
     whatsapp,
     primaryColor = "#6366f1",
+    showLgpd = true,
 }: SiteFooterProps) {
     const currentYear = new Date().getFullYear();
 
@@ -25,11 +27,8 @@ export function SiteFooter({
                     <div>
                         <h3 className="text-lg font-semibold mb-4">{siteName}</h3>
                         {crp && (
-                            <p className="text-gray-400 text-sm mb-2">CRP: {crp}</p>
+                            <p className="text-gray-400 text-sm">CRP: {crp}</p>
                         )}
-                        <p className="text-gray-400 text-sm">
-                            Psicólogo(a) comprometido(a) com seu bem-estar e saúde mental.
-                        </p>
                     </div>
 
                     {/* Contato */}
@@ -71,15 +70,24 @@ export function SiteFooter({
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/blog" className="hover:text-white transition-colors">
-                                    Blog
-                                </Link>
-                            </li>
-                            <li>
                                 <Link href="#contato" className="hover:text-white transition-colors">
                                     Contato
                                 </Link>
                             </li>
+                            {showLgpd && (
+                                <>
+                                    <li>
+                                        <Link href="#" className="hover:text-white transition-colors">
+                                            Política de Privacidade
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="#" className="hover:text-white transition-colors">
+                                            Política de Cookies
+                                        </Link>
+                                    </li>
+                                </>
+                            )}
                         </ul>
                     </div>
                 </div>

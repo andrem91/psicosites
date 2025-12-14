@@ -47,7 +47,23 @@ async function getSiteData(subdomain: string) {
         return null;
     }
 
-    return site;
+    // Buscar FAQs do site
+    const { data: faqs } = await supabase
+        .from("site_faqs")
+        .select("*")
+        .eq("site_id", site.id)
+        .eq("is_active", true)
+        .order("order_index", { ascending: true });
+
+    // Buscar depoimentos do site
+    const { data: testimonials } = await supabase
+        .from("site_testimonials")
+        .select("*")
+        .eq("site_id", site.id)
+        .eq("is_active", true)
+        .order("order_index", { ascending: true });
+
+    return { ...site, faqs: faqs || [], testimonials: testimonials || [] };
 }
 
 // Gerar metadata dinâmica
@@ -493,6 +509,123 @@ export default async function SiteHomePage({ params }: SitePageProps) {
                     </div>
                 </div>
             </section>
+
+            {/* Depoimentos Section */}
+            {site.testimonials && site.testimonials.length > 0 && (
+                <section className="py-20 px-4 bg-white">
+                    <div className="max-w-4xl mx-auto">
+                        <h2
+                            className="text-3xl font-bold mb-10 text-center"
+                            style={{ color: primaryColor }}
+                        >
+                            O que dizem sobre mim
+                        </h2>
+
+                        <div className="grid md:grid-cols-2 gap-6">
+                            {site.testimonials.map((testimonial: {
+                                id: string;
+                                author_name: string;
+                                author_initials: string;
+                                content: string;
+                                rating: number
+                            }) => (
+                                <div
+                                    key={testimonial.id}
+                                    className="bg-gray-50 rounded-2xl p-6 border border-gray-100"
+                                >
+                                    {/* Estrelas */}
+                                    <div className="flex gap-1 mb-4">
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                            <span
+                                                key={star}
+                                                className={`text-lg ${star <= testimonial.rating ? "text-yellow-400" : "text-gray-300"}`}
+                                            >
+                                                ★
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    {/* Conteúdo */}
+                                    <p className="text-gray-600 italic mb-4">
+                                        "{testimonial.content}"
+                                    </p>
+
+                                    {/* Autor */}
+                                    <div className="flex items-center gap-3">
+                                        <div
+                                            className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium text-sm"
+                                            style={{ backgroundColor: primaryColor }}
+                                        >
+                                            {testimonial.author_initials}
+                                        </div>
+                                        <span className="font-medium text-gray-900">
+                                            {testimonial.author_name}
+                                        </span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* FAQ Section */}
+            {site.faqs && site.faqs.length > 0 && (
+                <section className="py-20 px-4 bg-gray-50">
+                    <div className="max-w-3xl mx-auto">
+                        <h2
+                            className="text-3xl font-bold mb-10 text-center"
+                            style={{ color: primaryColor }}
+                        >
+                            Perguntas Frequentes
+                        </h2>
+
+                        <div className="space-y-4">
+                            {site.faqs.map((faq: { id: string; question: string; answer: string }) => (
+                                <details
+                                    key={faq.id}
+                                    className="group bg-white rounded-xl shadow-sm border border-gray-100"
+                                >
+                                    <summary className="flex justify-between items-center cursor-pointer p-6 font-medium text-gray-900">
+                                        {faq.question}
+                                        <svg
+                                            className="w-5 h-5 transition-transform group-open:rotate-180 text-gray-500"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </summary>
+                                    <p className="px-6 pb-6 text-gray-600 whitespace-pre-wrap">
+                                        {faq.answer}
+                                    </p>
+                                </details>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* Compromisso Ético Section */}
+            {site.show_ethics_section !== false && site.ethics_content && (
+                <section className="py-20 px-4 bg-white">
+                    <div className="max-w-3xl mx-auto">
+                        <h2
+                            className="text-3xl font-bold mb-10 text-center"
+                            style={{ color: primaryColor }}
+                        >
+                            🤝 Compromisso Ético
+                        </h2>
+
+                        <div className="prose prose-lg max-w-none">
+                            <p className="text-gray-600 whitespace-pre-wrap leading-relaxed">
+                                {site.ethics_content}
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            )}
         </>
     );
 }

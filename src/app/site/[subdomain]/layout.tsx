@@ -77,6 +77,7 @@ export default async function SiteLayout({ children, params }: SiteLayoutProps) 
                 email={profile?.email}
                 whatsapp={profile?.whatsapp}
                 primaryColor={primaryColor}
+                showLgpd={site.show_lgpd_section !== false}
             />
 
             {/* Botão WhatsApp flutuante */}
