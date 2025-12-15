@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { OnboardingProgress } from "./onboarding-progress";
 import { saveOnboardingStep, completeOnboarding } from "@/app/dashboard/onboarding/actions";
 
@@ -31,6 +32,7 @@ interface OnboardingWizardProps {
         crp?: string;
         whatsapp?: string;
         bio?: string;
+        bio_short?: string;
         specialties?: string[];
     };
     profileId: string;
@@ -48,6 +50,7 @@ export function OnboardingWizard({ initialData, profileId }: OnboardingWizardPro
         crp: initialData?.crp || "",
         whatsapp: initialData?.whatsapp || "",
         bio: initialData?.bio || "",
+        bio_short: initialData?.bio_short || "",
         specialties: initialData?.specialties || [],
     });
 
@@ -340,25 +343,43 @@ export function OnboardingWizard({ initialData, profileId }: OnboardingWizardPro
                             Quase lá! ✨
                         </h2>
                         <p className="text-gray-500 mt-2">
-                            Escreva uma breve apresentação sobre você
+                            Escreva sua apresentação para os pacientes
                         </p>
                     </div>
 
+                    {/* Frase de apresentação */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Sobre mim
+                            Frase de apresentação (exibida no topo do site)
                         </label>
-                        <textarea
-                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none"
-                            rows={5}
-                            placeholder="Conte um pouco sobre sua formação, experiência e abordagem terapêutica..."
-                            value={formData.bio}
+                        <Input
+                            placeholder="Ex: Psicóloga especialista em ansiedade e autoestima"
+                            value={formData.bio_short}
                             onChange={(e) =>
-                                setFormData({ ...formData, bio: e.target.value })
+                                setFormData({ ...formData, bio_short: e.target.value })
                             }
                         />
+                        <p className="text-sm text-gray-500 mt-1">
+                            Uma frase curta que resume sua atuação (máx. 150 caracteres)
+                        </p>
+                    </div>
+
+                    {/* Sobre mim completo */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Sobre mim (texto completo com formatação)
+                        </label>
+                        <div className="border border-gray-300 rounded-xl overflow-hidden">
+                            <RichTextEditor
+                                content={formData.bio}
+                                onChange={(html) =>
+                                    setFormData({ ...formData, bio: html })
+                                }
+                                placeholder="Conte um pouco sobre sua formação, experiência e abordagem terapêutica..."
+                            />
+                        </div>
                         <p className="text-sm text-gray-500 mt-2">
-                            {formData.bio.length}/500 caracteres
+                            Use os controles acima para formatar o texto com negrito, itálico, listas, etc.
                         </p>
                     </div>
                 </div>

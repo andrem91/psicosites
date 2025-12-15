@@ -37,8 +37,8 @@ export default async function OnboardingPage() {
         .eq("profile_id", profile.id)
         .single();
 
-    // Se já tem site publicado, redirecionar para dashboard
-    if (site) {
+    // Se já tem site (com ID válido), redirecionar para dashboard
+    if (site?.id) {
         redirect("/dashboard");
     }
 
@@ -67,6 +67,7 @@ export default async function OnboardingPage() {
                             crp: profile.crp || "",
                             whatsapp: profile.whatsapp || "",
                             bio: profile.bio || "",
+                            bio_short: profile.bio_short || "",
                             specialties: profile.specialties || [],
                         }}
                     />

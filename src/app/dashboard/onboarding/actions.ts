@@ -8,6 +8,7 @@ interface OnboardingData {
     crp: string;
     whatsapp: string;
     bio: string;
+    bio_short: string;
     specialties: string[];
 }
 
@@ -25,6 +26,7 @@ export async function saveOnboardingStep(
             crp: data.crp,
             whatsapp: data.whatsapp,
             bio: data.bio,
+            bio_short: data.bio_short,
             specialties: data.specialties,
             updated_at: new Date().toISOString(),
         })

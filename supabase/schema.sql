@@ -49,6 +49,13 @@ CREATE POLICY "Usuários podem criar seu próprio perfil"
     ON profiles FOR INSERT
     WITH CHECK ((select auth.uid()) = user_id);
 
+-- Perfis de sites publicados são visíveis publicamente (para visitantes anônimos)
+CREATE POLICY "Perfis de sites publicados são visíveis"
+    ON profiles FOR SELECT
+    USING (
+        id IN (SELECT profile_id FROM sites WHERE is_published = true)
+    );
+
 -- ======================
 -- TABELA: SITES
 -- Configuração do site do psicólogo

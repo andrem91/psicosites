@@ -24,7 +24,8 @@ async function getSiteData(subdomain: string) {
         crp,
         specialties,
         bio,
-        profile_image_url
+        profile_image_url,
+        logo_url
       )
     `
         )
@@ -57,12 +58,11 @@ export default async function SiteLayout({ children, params }: SiteLayoutProps) 
             {/* Header */}
             <SiteHeader
                 siteName={profile?.full_name || "Psicólogo"}
-                logo={profile?.profile_image_url}
+                logo={profile?.logo_url}
                 primaryColor={primaryColor}
                 navItems={[
                     { label: "Início", href: "/" },
                     { label: "Sobre", href: "#sobre" },
-                    { label: "Blog", href: "/blog" },
                     { label: "Contato", href: "#contato" },
                 ]}
             />

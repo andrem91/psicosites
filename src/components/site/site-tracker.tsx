@@ -9,6 +9,23 @@ interface SiteTrackerProps {
 export function SiteTracker({ siteId }: SiteTrackerProps) {
     const hasTracked = useRef(false);
 
+    const trackEvent = async (eventType: string, referrer?: string) => {
+        try {
+            await fetch("/api/tracking", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    siteId,
+                    eventType,
+                    referrer: referrer || null,
+                }),
+            });
+        } catch (error) {
+            // Silenciar erros de tracking para não afetar UX
+            console.debug("Tracking:", eventType);
+        }
+    };
+
     useEffect(() => {
         // Evitar tracking duplicado
         if (hasTracked.current) return;
@@ -47,24 +64,8 @@ export function SiteTracker({ siteId }: SiteTrackerProps) {
                 link.addEventListener("click", () => trackEvent("cta_click"));
             }
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [siteId]);
-
-    const trackEvent = async (eventType: string, referrer?: string) => {
-        try {
-            await fetch("/api/tracking", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    siteId,
-                    eventType,
-                    referrer: referrer || null,
-                }),
-            });
-        } catch (error) {
-            // Silenciar erros de tracking para não afetar UX
-            console.debug("Tracking:", eventType);
-        }
-    };
 
     return null; // Componente invisível
 }

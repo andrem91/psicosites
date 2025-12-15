@@ -29,10 +29,6 @@ export function TestimonialsEditor({ siteId }: TestimonialsEditorProps) {
     const [isAdding, setIsAdding] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        loadTestimonials();
-    }, []);
-
     const loadTestimonials = async () => {
         try {
             const res = await fetch("/api/site/testimonials");
@@ -44,6 +40,11 @@ export function TestimonialsEditor({ siteId }: TestimonialsEditorProps) {
             console.error("Erro ao carregar depoimentos:", error);
         }
     };
+
+    useEffect(() => {
+        loadTestimonials();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleAdd = async () => {
         if (!newName.trim() || !newContent.trim()) return;
@@ -210,7 +211,7 @@ export function TestimonialsEditor({ siteId }: TestimonialsEditorProps) {
                                                 <StarRating rating={testimonial.rating} />
                                             </div>
                                         </div>
-                                        <p className="text-sm text-gray-600 mt-2 italic">"{testimonial.content}"</p>
+                                        <p className="text-sm text-gray-600 mt-2 italic">&ldquo;{testimonial.content}&rdquo;</p>
                                     </div>
                                     <div className="flex gap-2">
                                         <button

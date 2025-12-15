@@ -52,10 +52,6 @@ export function FAQEditor({ siteId, initialFaqs = [] }: FAQEditorProps) {
     const [loading, setLoading] = useState(false);
     const [showSuggestions, setShowSuggestions] = useState(false);
 
-    useEffect(() => {
-        loadFaqs();
-    }, []);
-
     const loadFaqs = async () => {
         try {
             const res = await fetch("/api/site/faqs");
@@ -67,6 +63,11 @@ export function FAQEditor({ siteId, initialFaqs = [] }: FAQEditorProps) {
             console.error("Erro ao carregar FAQs:", error);
         }
     };
+
+    useEffect(() => {
+        loadFaqs();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleAdd = async () => {
         if (!newQuestion.trim() || !newAnswer.trim()) return;
