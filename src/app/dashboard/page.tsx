@@ -98,47 +98,58 @@ export default async function DashboardPage() {
                 </div>
 
                 {/* Progress bar */}
-                <div className="mt-4">
-                    <div className="flex justify-between text-sm mb-2">
-                        <span>Progresso do perfil</span>
-                        <span>{profileProgress}%</span>
+                {profileProgress < 100 ? (
+                    <div className="mt-4">
+                        <div className="flex justify-between text-sm mb-2">
+                            <span>Progresso do perfil</span>
+                            <span>{profileProgress}%</span>
+                        </div>
+                        <Progress
+                            value={profileProgress}
+                            className="h-2 bg-white/20"
+                        />
                     </div>
-                    <Progress
-                        value={profileProgress}
-                        className="h-2 bg-white/20"
-                    />
-                </div>
+                ) : (
+                    <div className="mt-4 flex items-center gap-2 text-sm">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span>Perfil 100% completo!</span>
+                    </div>
+                )}
             </div>
 
             {/* Cards de ação rápida */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {/* Card: Completar perfil */}
-                <div className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition-shadow">
-                    <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center mb-4">
-                        <svg
-                            className="w-6 h-6 text-indigo-600"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                            />
-                        </svg>
+                {/* Card: Completar Perfil (aparece primeiro se incompleto) */}
+                {profileProgress < 100 && (
+                    <div className="bg-white rounded-2xl border border-amber-200 p-6 hover:shadow-lg transition-shadow">
+                        <div className="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center mb-4">
+                            <svg
+                                className="w-6 h-6 text-amber-600"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                />
+                            </svg>
+                        </div>
+                        <h3 className="font-semibold text-gray-900 mb-2">Completar Perfil</h3>
+                        <p className="text-sm text-gray-500 mb-4">
+                            Adicione suas informações profissionais, CRP e foto.
+                        </p>
+                        <Link href="/dashboard/conta">
+                            <Button size="sm" className="w-full bg-amber-600 hover:bg-amber-700">
+                                Completar agora
+                            </Button>
+                        </Link>
                     </div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Completar Perfil</h3>
-                    <p className="text-sm text-gray-500 mb-4">
-                        Adicione suas informações profissionais, CRP e foto.
-                    </p>
-                    <Link href="/dashboard/conta">
-                        <Button size="sm" className="w-full">
-                            {profileProgress < 100 ? "Completar agora" : "Editar perfil"}
-                        </Button>
-                    </Link>
-                </div>
+                )}
 
                 {/* Card: Personalizar site */}
                 <div className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition-shadow">
@@ -197,7 +208,7 @@ export default async function DashboardPage() {
                     </p>
                     {site?.subdomain ? (
                         <a
-                            href={`http://${site.subdomain}.localhost:3000`}
+                            href={`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/site/${site.subdomain}`}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -211,6 +222,36 @@ export default async function DashboardPage() {
                         </Button>
                     )}
                 </div>
+
+                {/* Card: Perfil Completo (aparece por último quando 100%) */}
+                {profileProgress >= 100 && (
+                    <div className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-lg transition-shadow opacity-80">
+                        <div className="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center mb-4">
+                            <svg
+                                className="w-6 h-6 text-green-600"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                        </div>
+                        <h3 className="font-semibold text-gray-900 mb-2">Perfil Completo ✓</h3>
+                        <p className="text-sm text-gray-500 mb-4">
+                            Seu perfil está completo. Edite quando quiser.
+                        </p>
+                        <Link href="/dashboard/conta">
+                            <Button size="sm" variant="ghost" className="w-full text-gray-600">
+                                Editar perfil
+                            </Button>
+                        </Link>
+                    </div>
+                )}
             </div>
 
             {/* Dicas rápidas */}

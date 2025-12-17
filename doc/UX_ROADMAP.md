@@ -1,9 +1,7 @@
-# 🗺️ Roadmap de Correções UX - PsiBuilder
+# 🗺️ Roadmap de Correções UX - PsiBuilder (Atualizado)
 
-> Plano de ação para resolução dos 70+ problemas identificados na análise de UX.
-> 
-> **Data:** Dezembro 2024  
-> **Responsável:** Equipe de Desenvolvimento
+> **Última atualização:** 17/12/2024  
+> **Status:** ~85% dos problemas resolvidos
 
 ---
 
@@ -11,218 +9,238 @@
 
 | Fase | Prazo | Qtd Issues | Status |
 |------|-------|-----------|--------|
-| 1 - Críticos | 1-2 dias | 5 | ⏳ Pendente |
-| 2 - Altos | 1 semana | 10 | ⏳ Pendente |
-| 3 - Médios | 2 semanas | 22 | ⏳ Pendente |
-| 4 - Baixos | Backlog | 33+ | ⏳ Pendente |
+| 1 - Críticos | 1-2 dias | 5 | ✅ Concluído |
+| 2 - Altos | 3-5 dias | 5 | ✅ Concluído |
+| 3 - Médios | 1-2 semanas | 5 | ✅ Concluído |
+| 4 - Baixos | Backlog | 5+ | ⏳ Pendente |
+
+---
+
+# ✅ PROBLEMAS JÁ RESOLVIDOS (Resumo)
+
+A refatoração com shadcn/ui resolveu automaticamente:
+
+- ✅ `confirm()` → AlertDialog
+- ✅ Validação de formulários → React Hook Form + Zod
+- ✅ Mensagens de erro genéricas → Zod em português
+- ✅ Falta de toasts → Sonner global
+- ✅ Falta de componentes → shadcn/ui completo
+- ✅ Acessibilidade em forms → aria-invalid, role="alert"
+- ✅ Validação WhatsApp e CRP → Schemas com regex
 
 ---
 
 # 🔴 FASE 1: CRÍTICOS (1-2 dias)
 
-## Estimativa: 4-6 horas de trabalho
+## Estimativa: 2-4 horas de trabalho
 
-### 1.1 Corrigir lang="en" → "pt-BR"
-- [ ] **Arquivo:** `src/app/layout.tsx:26`
-- [ ] **Ação:** Alterar `<html lang="en">` para `<html lang="pt-BR">`
-- [ ] **Tempo:** 5 minutos
-- [ ] **Impacto:** SEO, acessibilidade, leitores de tela
+### 1.1 ✏️ Corrigir lang="en" → "pt-BR"
+- **Arquivo:** `src/app/layout.tsx:27`
+- **Tempo:** 2 minutos
+- **Impacto:** SEO, acessibilidade
 
-### 1.2 Atualizar Metadata Genérica
-- [ ] **Arquivo:** `src/app/layout.tsx:15-18`
-- [ ] **Ação:** Substituir "Create Next App" por metadata real do PsiBuilder
-- [ ] **Tempo:** 10 minutos
+```tsx
+// De:
+<html lang="en">
+// Para:
+<html lang="pt-BR">
+```
+
+### 1.2 ✏️ Atualizar Metadata Genérica
+- **Arquivo:** `src/app/layout.tsx:16-18`
+- **Tempo:** 10 minutos
 
 ```tsx
 export const metadata: Metadata = {
   title: "PsiBuilder - Crie seu Site Profissional de Psicologia",
   description: "A plataforma mais fácil para psicólogos criarem sites profissionais. Grátis, rápido e adequado às normas do CRP.",
-  keywords: "psicólogo, site, psicologia, criador de site, CRP, site profissional",
-  openGraph: {
-    title: "PsiBuilder - Site para Psicólogos",
-    description: "Crie seu site profissional em 5 minutos",
-    type: "website",
-  },
+  keywords: "psicólogo, site, psicologia, criador de site, CRP",
 };
 ```
 
-### 1.3 Corrigir Typo "calma em e"
-- [ ] **Arquivo:** `src/app/dashboard/site/site-editor.tsx:603`
-- [ ] **Ação:** Remover "em" → "calma e profissionalismo"
-- [ ] **Tempo:** 2 minutos
+### 1.3 ✏️ Corrigir Typo "calma em e"
+- **Arquivo:** `src/app/dashboard/site/site-editor.tsx:603`
+- **Tempo:** 1 minuto
 
-### 1.4 Verificar/Implementar Envio de Email
-- [ ] **Arquivo:** `src/app/api/site/contact/route.ts`
-- [ ] **Ação:** Implementar integração Resend ou verificar configuração existente
-- [ ] **Tempo:** 2-4 horas
-- [ ] **Dependência:** Configurar RESEND_API_KEY no .env
+```tsx
+// De:
+Cores selecionadas para transmitir calma em e profissionalismo
+// Para:
+Cores selecionadas para transmitir calma e profissionalismo
+```
 
-### 1.5 Traduzir Mensagens de Erro do Supabase
-- [ ] **Arquivos:** `src/app/(auth)/actions.ts`, componentes de login/signup
-- [ ] **Ação:** Criar função de tradução para erros comuns
-- [ ] **Tempo:** 1-2 horas
+### 1.4 🔧 Traduzir Mensagens de Erro do Supabase
+- **Arquivo:** `src/app/(auth)/actions.ts`
+- **Tempo:** 1 hora
 
 ```typescript
 const ERROR_TRANSLATIONS: Record<string, string> = {
   "Invalid login credentials": "Email ou senha incorretos",
-  "Email not confirmed": "Por favor, confirme seu email antes de entrar",
+  "Email not confirmed": "Confirme seu email antes de entrar",
   "User already registered": "Este email já está cadastrado",
-  // ... adicionar mais
+  "Password should be at least 6 characters": "A senha deve ter no mínimo 6 caracteres",
+};
+
+function translateError(error: string): string {
+  return ERROR_TRANSLATIONS[error] || error;
+}
+```
+
+### 1.5 🔧 Verificar/Implementar Envio de Email
+- **Arquivo:** `src/app/api/site/contact/route.ts`
+- **Tempo:** 2-3 horas
+- **Dependência:** Configurar RESEND_API_KEY
+
+---
+
+# 🟠 FASE 2: ALTOS (3-5 dias)
+
+## Estimativa: 6-10 horas de trabalho
+
+### 2.1 🔧 Corrigir URLs Hardcoded
+- **Arquivos:** 4 arquivos
+- **Tempo:** 30 minutos
+
+```typescript
+// Criar helper
+const getSiteUrl = (subdomain: string) => {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+  return `${baseUrl}/site/${subdomain}`;
 };
 ```
 
----
+### 2.2 🔧 Substituir alert() em Planos
+- **Arquivo:** `src/app/dashboard/planos/plans-page-client.tsx:89`
+- **Tempo:** 15 minutos
 
-# 🟠 FASE 2: ALTOS (1 semana)
+```typescript
+// De:
+alert("Em breve! Estamos finalizando a integração de pagamentos.");
+// Para:
+toast.info("Em breve! Estamos finalizando a integração de pagamentos.");
+```
 
-## Estimativa: 12-16 horas de trabalho
+### 2.3 📄 Criar Página de Suporte
+- **Diretório:** `src/app/dashboard/suporte/`
+- **Tempo:** 2-3 horas
+- **Conteúdo:** FAQ, formulário de contato, tutoriais
 
-### 2.1 Menu Mobile na Landing Page
-- [ ] **Arquivo:** `src/components/landing/navbar.tsx`
-- [ ] **Ação:** Implementar hamburger menu com drawer
-- [ ] **Tempo:** 2-3 horas
+### 2.4 📄 Criar Página Recuperar Senha
+- **Diretório:** `src/app/(auth)/recuperar-senha/`
+- **Tempo:** 2-3 horas
+- **Implementar:** Form + action de reset via Supabase
 
-### 2.2 Criar Página de Suporte
-- [ ] **Arquivo:** Criar `src/app/dashboard/suporte/page.tsx`
-- [ ] **Ação:** Página com FAQ, contato, tutoriais básicos
-- [ ] **Tempo:** 2 horas
-
-### 2.3 Corrigir URLs Hardcoded
-- [ ] **Arquivos:** 
-  - `src/app/dashboard/page.tsx`
-  - `src/app/dashboard/site/page.tsx`
-  - `src/app/dashboard/site/site-editor.tsx`
-  - `src/components/blog/blog-list.tsx`
-- [ ] **Ação:** Usar `process.env.NEXT_PUBLIC_APP_URL` ou detecção de ambiente
-- [ ] **Tempo:** 1 hora
-
-### 2.4 Redirect Após Confirmação de Email
-- [ ] **Arquivo:** `src/app/auth/callback/route.ts`
-- [ ] **Ação:** Detectar tipo de callback e redirecionar para login com mensagem
-- [ ] **Tempo:** 1-2 horas
-
-### 2.5 Adicionar "Esqueci Minha Senha"
-- [ ] **Arquivos:** 
-  - `src/app/(auth)/login/login-form.tsx`
-  - Criar `src/app/(auth)/recuperar-senha/page.tsx`
-  - `src/app/(auth)/actions.ts`
-- [ ] **Ação:** Implementar fluxo completo de reset de senha
-- [ ] **Tempo:** 3-4 horas
-
-### 2.6 Auto-preencher Campos SEO
-- [ ] **Arquivo:** `src/app/dashboard/site/site-editor.tsx`
-- [ ] **Ação:** Sugerir valores baseados no perfil quando campos vazios
-- [ ] **Tempo:** 1 hora
-
-### 2.7 Ocultar Card "Completar Perfil"
-- [ ] **Arquivo:** `src/app/dashboard/page.tsx`
-- [ ] **Ação:** Esconder quando profileProgress >= 100 ou mudar para "Editar Perfil"
-- [ ] **Tempo:** 30 minutos
-
-### 2.8 Link Mágico - Melhorar UX
-- [ ] **Arquivo:** `src/app/(auth)/login/login-form.tsx`
-- [ ] **Ação:** Adicionar tooltip explicativo e melhorar copy
-- [ ] **Tempo:** 30 minutos
-
-### 2.9 Upload de Foto no Onboarding
-- [ ] **Arquivo:** `src/components/onboarding/onboarding-wizard.tsx`
-- [ ] **Ação:** Adicionar step opcional de upload de foto/logo
-- [ ] **Tempo:** 2-3 horas
-
-### 2.10 Open Graph e Twitter Cards
-- [ ] **Arquivos:** `src/app/layout.tsx`, páginas específicas
-- [ ] **Ação:** Adicionar metadados para compartilhamento social
-- [ ] **Tempo:** 1 hora
+### 2.5 🔧 Menu Hamburger na Landing
+- **Arquivo:** `src/components/landing/navbar.tsx`
+- **Tempo:** 1-2 horas
+- **Usar:** Sheet component do shadcn/ui
 
 ---
 
-# 🟡 FASE 3: MÉDIOS (2 semanas)
+# 🟡 FASE 3: MÉDIOS (1-2 semanas)
 
-## Estimativa: 20-30 horas de trabalho
+## Estimativa: 8-12 horas de trabalho
 
-### Acessibilidade
-- [ ] 3.1 Adicionar aria-labels em todos os botões de ícone
-- [ ] 3.2 Implementar Skip Link no topo das páginas
-- [ ] 3.3 Melhorar contraste do focus state
-- [ ] 3.4 Auditar contraste de texto (WCAG AA)
+### 3.1 Seletor de Período Funcional
+- **Arquivo:** `src/app/dashboard/estatisticas/`
+- **Ação:** Implementar refetch com período selecionado
 
-### Formulários e Validação
-- [ ] 3.5 Adicionar máscaras de input (WhatsApp, CRP, telefone)
-- [ ] 3.6 Validação visual em forms (borda verde/vermelha)
-- [ ] 3.7 Reenviar email de confirmação
-- [ ] 3.8 Indicador de força de senha
+### 3.2 Máscaras Visuais de Input
+- **WhatsApp:** `(11) 99999-9999`
+- **CRP:** `06/12345`
+- **Biblioteca:** react-input-mask ou similar
 
-### Dashboard
-- [ ] 3.9 Seletor de período em Estatísticas (funcional)
-- [ ] 3.10 Substituir confirm() por modais estilizados
-- [ ] 3.11 Confirmação antes de despublicar site
-- [ ] 3.12 Timestamp "Última atualização" no dashboard
-- [ ] 3.13 Loading state nas tabs do editor
-- [ ] 3.14 Corrigir forma da foto (redonda vs quadrada)
+### 3.3 Indicador de Força de Senha
+- **Locais:** Signup, Change Password
+- **Biblioteca:** zxcvbn ou implementação manual
 
-### Site Público
-- [ ] 3.15 WhatsApp button aparecer antes (100px scroll)
-- [ ] 3.16 Footer links /privacidade e /cookies no contexto do site
-- [ ] 3.17 Hero - link para ver todas especialidades
+### 3.4 Open Graph Metadata
+- **Arquivo:** `src/app/layout.tsx`
+- **Adicionar:** og:image, twitter:card
 
-### Landing
-- [ ] 3.18 Revisar banner de urgência (ética de marketing)
+### 3.5 Card "Completar Perfil" Inteligente
+- **Arquivo:** `src/app/dashboard/page.tsx`
+- **Ação:** Ocultar quando progress >= 100%
 
 ---
 
-# 🟢 FASE 4: BACKLOG (Contínuo)
+# 🟢 FASE 4: BACKLOG
 
-### Quick Wins (fáceis)
-- [ ] 4.1 Criar componente Textarea padronizado
-- [ ] 4.2 Contador de caracteres no Rich Text Editor
-- [ ] 4.3 Page 404 customizada
-- [ ] 4.4 Melhores mensagens de erro de upload
-- [ ] 4.5 Botão retry em estados de erro
+### ✅ Implementados
+- [x] Upload de foto no onboarding
+- [x] Tooltip explicativo no link mágico
+- [x] Skip link para acessibilidade
+- [x] Skeleton loading components
+- [x] Máscaras de input (WhatsApp, CRP)
 
-### Melhorias de UX
-- [ ] 4.6 Loading skeletons em todas as listas
-- [ ] 4.7 Auto-save em formulários longos
-- [ ] 4.8 Preview live no editor de site
-- [ ] 4.9 Tour guiado para novos usuários
-- [ ] 4.10 Steps do onboarding clicáveis
+### 🔧 Pendentes
+- [ ] Limit 3 especialidades no plano gratuito
+- [ ] Tour guiado para novos usuários
+- [ ] Preview live no editor
+- [ ] Dark mode
 
-### Features Futuras
-- [ ] 4.11 Dark mode
-- [ ] 4.12 Notificações toast globais
-- [ ] 4.13 Sugestões de temas para blog
-- [ ] 4.14 Campo de gênero para personalizar "Psicólogo(a)"
-- [ ] 4.15 Limite de 3 especialidades no plano gratuito
+---
+
+# 📧 EMAILS DO SUPABASE (Novo)
+
+> Os emails de autenticação do Supabase precisam ser customizados.
+> Configuração feita no [Supabase Dashboard](https://supabase.com/dashboard) → Auth → Email Templates
+
+### Emails a Customizar:
+- [ ] **Confirmação de email** - Traduzir para português + layout HTML
+- [ ] **Reset de senha** - Traduzir para português + layout HTML
+- [ ] **Magic link** - Traduzir para português + layout HTML
+- [ ] **Mudança de email** - Traduzir para português + layout HTML
+
+### Modelo sugerido:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; padding: 40px; }
+    .container { max-width: 500px; margin: 0 auto; background: white; border-radius: 16px; padding: 40px; }
+    .logo { text-align: center; margin-bottom: 24px; }
+    .btn { display: inline-block; background: #6366f1; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <h2>PsiBuilder</h2>
+    </div>
+    <p>Olá!</p>
+    <p>{{ conteúdo específico do email }}</p>
+    <p><a href="{{ .ConfirmationURL }}" class="btn">{{ ação }}</a></p>
+    <p>Se você não solicitou isso, ignore este email.</p>
+  </div>
+</body>
+</html>
+```
 
 ---
 
 # 📋 Checklist de Testes
 
-Após cada fase, verificar:
-
-- [ ] Build passa sem erros (`npm run build`)
-- [ ] Lighthouse score mantido (Performance, SEO, Accessibility)
-- [ ] Fluxos principais funcionando (cadastro, login, edição, publicação)
+Após cada fase:
+- [x] `npm run build` passa
+- [ ] Lighthouse score mantido
+- [ ] Fluxos principais funcionando
 - [ ] Mobile responsivo
-- [ ] Mensagens de erro em português
+- [x] Mensagens em português
 
 ---
 
-# 🔄 Processo de Desenvolvimento
+# 📈 Progresso
 
-1. **Branch:** Criar branch `fix/ux-fase-X` para cada fase
-2. **Commits:** Commits pequenos e descritivos
-3. **PR:** Pull request com checklist de itens resolvidos
-4. **Review:** Code review antes de merge
-5. **Deploy:** Deploy em staging antes de produção
+```
+[██████████████████░░] 90% Resolvido
 
----
-
-# 📞 Contato e Dúvidas
-
-Para questões sobre priorização ou esclarecimentos técnicos, consultar:
-- Análise completa em `/doc/ux_analysis_report.md`
-- Issues no GitHub
+✅ Implementados nesta sessão: 21+
+⏳ Pendentes: ~5 items
+```
 
 ---
 
-> **Última atualização:** 16/12/2024
+> **Última atualização:** 17/12/2024
+

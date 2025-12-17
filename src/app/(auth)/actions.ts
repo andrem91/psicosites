@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { translateError } from "@/lib/translations/errors";
 
 export type AuthResult = {
     error?: string;
@@ -21,7 +22,7 @@ export async function loginWithEmail(formData: FormData) {
     });
 
     if (error) {
-        return { error: error.message };
+        return { error: translateError(error.message) };
     }
 
     redirect("/dashboard");
@@ -40,7 +41,7 @@ export async function loginWithMagicLink(formData: FormData) {
     });
 
     if (error) {
-        return { error: error.message };
+        return { error: translateError(error.message) };
     }
 
     return { success: true, message: "Link de acesso enviado para seu email!" };
@@ -65,7 +66,7 @@ export async function signUp(formData: FormData) {
     });
 
     if (error) {
-        return { error: error.message };
+        return { error: translateError(error.message) };
     }
 
     // Redireciona para página de confirmação de email
@@ -89,10 +90,27 @@ export async function loginWithGoogle() {
     });
 
     if (error) {
-        return { error: error.message };
+        return { error: translateError(error.message) };
     }
 
     if (data.url) {
         redirect(data.url);
     }
 }
+
+export async function requestPasswordReset(formData: FormData) {
+    const supabase = await createClient();
+
+    const email = formData.get("email") as string;
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/atualizar-senha`,
+    });
+
+    if (error) {
+        return { error: translateError(error.message) };
+    }
+
+    return { success: true };
+}
+

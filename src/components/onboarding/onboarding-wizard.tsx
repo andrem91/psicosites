@@ -4,12 +4,14 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { MaskedInput } from "@/components/ui/masked-input";
 import { Field, FieldLabel, FieldError, FieldGroup, FieldDescription } from "@/components/ui/field";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { RichTextEditor } from "@/components/ui/rich-text-editor";
+import { ProfileImageUpload } from "@/components/ui/profile-image-upload";
 import { OnboardingProgress } from "./onboarding-progress";
 import { saveOnboardingStep, completeOnboarding } from "@/app/dashboard/onboarding/actions";
 import {
@@ -48,6 +50,7 @@ export function OnboardingWizard({ initialData, profileId }: OnboardingWizardPro
         bio_short: initialData?.bio_short || "",
         specialties: initialData?.specialties || [],
     });
+    const [profileImageUrl, setProfileImageUrl] = useState<string | undefined>(undefined);
 
     const totalSteps = 3;
 
@@ -158,6 +161,15 @@ export function OnboardingWizard({ initialData, profileId }: OnboardingWizardPro
                         </p>
                     </div>
 
+                    {/* Photo Upload */}
+                    <div className="flex justify-center mb-8">
+                        <ProfileImageUpload
+                            currentImage={profileImageUrl}
+                            profileId={profileId}
+                            onUpload={(url) => setProfileImageUrl(url)}
+                        />
+                    </div>
+
                     <FieldGroup>
                         <Controller
                             name="full_name"
@@ -184,14 +196,16 @@ export function OnboardingWizard({ initialData, profileId }: OnboardingWizardPro
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid}>
                                     <FieldLabel htmlFor="whatsapp">WhatsApp</FieldLabel>
-                                    <Input
+                                    <MaskedInput
                                         id="whatsapp"
-                                        placeholder="11999999999"
+                                        mask="whatsapp"
+                                        placeholder="(11) 99999-9999"
                                         aria-invalid={fieldState.invalid}
-                                        {...field}
+                                        value={field.value}
+                                        onValueChange={field.onChange}
                                     />
                                     <FieldDescription>
-                                        Apenas números (DDD + número)
+                                        Este será o número exibido no seu site
                                     </FieldDescription>
                                     {fieldState.invalid && (
                                         <FieldError errors={[fieldState.error]} />
@@ -228,11 +242,13 @@ export function OnboardingWizard({ initialData, profileId }: OnboardingWizardPro
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid}>
                                     <FieldLabel htmlFor="crp">Número do CRP</FieldLabel>
-                                    <Input
+                                    <MaskedInput
                                         id="crp"
+                                        mask="crp"
                                         placeholder="06/12345"
                                         aria-invalid={fieldState.invalid}
-                                        {...field}
+                                        value={field.value}
+                                        onValueChange={field.onChange}
                                     />
                                     <FieldDescription>
                                         O CRP será exibido no seu site para transmitir credibilidade.
@@ -277,25 +293,47 @@ export function OnboardingWizard({ initialData, profileId }: OnboardingWizardPro
                         <Controller
                             name="bio_short"
                             control={step3Form.control}
-                            render={({ field, fieldState }) => (
-                                <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel htmlFor="bio_short">
-                                        Frase de apresentação (exibida no topo do site)
-                                    </FieldLabel>
-                                    <Input
-                                        id="bio_short"
-                                        placeholder="Ex: Psicóloga especialista em ansiedade e autoestima"
-                                        aria-invalid={fieldState.invalid}
-                                        {...field}
-                                    />
-                                    <FieldDescription>
-                                        Uma frase curta que resume sua atuação (máx. 150 caracteres)
-                                    </FieldDescription>
-                                    {fieldState.invalid && (
-                                        <FieldError errors={[fieldState.error]} />
-                                    )}
-                                </Field>
-                            )}
+                            render={({ field, fieldState }) => {
+                                const charCount = field.value?.length || 0;
+                                const maxChars = 150;
+                                const isOverLimit = charCount > maxChars;
+                                const isNearLimit = charCount > maxChars * 0.8;
+
+                                return (
+                                    <Field data-invalid={fieldState.invalid || isOverLimit}>
+                                        <FieldLabel htmlFor="bio_short">
+                                            Frase de apresentação (exibida no topo do site)
+                                        </FieldLabel>
+                                        <Input
+                                            id="bio_short"
+                                            placeholder="Ex: Psicóloga especialista em ansiedade e autoestima"
+                                            aria-invalid={fieldState.invalid || isOverLimit}
+                                            {...field}
+                                        />
+                                        <div className="flex justify-between items-center">
+                                            <FieldDescription>
+                                                Uma frase curta que resume sua atuação
+                                            </FieldDescription>
+                                            <span className={`text-xs font-medium ${isOverLimit
+                                                    ? 'text-red-500'
+                                                    : isNearLimit
+                                                        ? 'text-amber-500'
+                                                        : 'text-gray-400'
+                                                }`}>
+                                                {charCount}/{maxChars}
+                                            </span>
+                                        </div>
+                                        {isOverLimit && (
+                                            <p className="text-xs text-red-500 mt-1">
+                                                Limite de {maxChars} caracteres excedido
+                                            </p>
+                                        )}
+                                        {fieldState.invalid && (
+                                            <FieldError errors={[fieldState.error]} />
+                                        )}
+                                    </Field>
+                                );
+                            }}
                         />
 
                         <Controller

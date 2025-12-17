@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field, FieldLabel, FieldError, FieldGroup } from "@/components/ui/field";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { loginSchema, type LoginFormData } from "@/lib/schemas/auth";
 import { loginWithEmail, loginWithMagicLink } from "../actions";
 
@@ -91,26 +93,36 @@ export function LoginForm() {
                 />
 
                 {mode === "password" && (
-                    <Controller
-                        name="password"
-                        control={control}
-                        render={({ field, fieldState }) => (
-                            <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel htmlFor="password">Senha</FieldLabel>
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    placeholder="••••••••"
-                                    autoComplete="current-password"
-                                    aria-invalid={fieldState.invalid}
-                                    {...field}
-                                />
-                                {fieldState.invalid && (
-                                    <FieldError errors={[fieldState.error]} />
-                                )}
-                            </Field>
-                        )}
-                    />
+                    <>
+                        <Controller
+                            name="password"
+                            control={control}
+                            render={({ field, fieldState }) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldLabel htmlFor="password">Senha</FieldLabel>
+                                    <Input
+                                        id="password"
+                                        type="password"
+                                        placeholder="••••••••"
+                                        autoComplete="current-password"
+                                        aria-invalid={fieldState.invalid}
+                                        {...field}
+                                    />
+                                    {fieldState.invalid && (
+                                        <FieldError errors={[fieldState.error]} />
+                                    )}
+                                </Field>
+                            )}
+                        />
+                        <div className="text-right -mt-2">
+                            <Link
+                                href="/recuperar-senha"
+                                className="text-sm text-indigo-600 hover:underline"
+                            >
+                                Esqueceu a senha?
+                            </Link>
+                        </div>
+                    </>
                 )}
             </FieldGroup>
 
@@ -127,16 +139,28 @@ export function LoginForm() {
                 </div>
             </div>
 
-            <Button
-                type="button"
-                variant="outline"
-                className="w-full"
-                onClick={() => setMode(mode === "password" ? "magic" : "password")}
-            >
-                {mode === "password"
-                    ? "Entrar com link mágico (sem senha)"
-                    : "Entrar com email e senha"}
-            </Button>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => setMode(mode === "password" ? "magic" : "password")}
+                    >
+                        {mode === "password"
+                            ? "Entrar com link mágico (sem senha)"
+                            : "Entrar com email e senha"}
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p className="max-w-xs">
+                        {mode === "password"
+                            ? "Receba um link de acesso no seu email. Sem precisar lembrar senha!"
+                            : "Use sua senha para entrar mais rápido"}
+                    </p>
+                </TooltipContent>
+            </Tooltip>
         </form>
     );
 }
+

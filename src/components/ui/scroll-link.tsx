@@ -7,6 +7,7 @@ interface ScrollLinkProps {
     children: ReactNode;
     className?: string;
     style?: React.CSSProperties;
+    onClick?: () => void;
     "data-track"?: string;
 }
 
@@ -14,12 +15,13 @@ interface ScrollLinkProps {
  * Componente para scroll suave até uma seção da página.
  * Usa button com onClick ao invés de <a href="#"> para evitar warnings de lint.
  */
-export function ScrollLink({ to, children, className, style, ...props }: ScrollLinkProps) {
+export function ScrollLink({ to, children, className, style, onClick, ...props }: ScrollLinkProps) {
     const handleClick = () => {
         const element = document.getElementById(to);
         if (element) {
             element.scrollIntoView({ behavior: "smooth" });
         }
+        onClick?.();
     };
 
     return (
@@ -34,3 +36,4 @@ export function ScrollLink({ to, children, className, style, ...props }: ScrollL
         </button>
     );
 }
+

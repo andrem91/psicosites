@@ -76,7 +76,7 @@ export function ProfileImageUpload({
         <div className="flex items-center gap-6">
             {/* Avatar */}
             <div className="relative">
-                <div className="w-24 h-24 rounded-full bg-gray-100 overflow-hidden border-4 border-white shadow-lg">
+                <div className="w-24 h-24 rounded-xl bg-gray-100 overflow-hidden border-4 border-white shadow-lg">
                     {previewUrl ? (
                         <Image
                             src={previewUrl}
@@ -106,13 +106,13 @@ export function ProfileImageUpload({
 
                 {/* Loading overlay */}
                 {isUploading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full">
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-xl">
                         <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
                     </div>
                 )}
             </div>
 
-            {/* Botões */}
+            {/* Botões e Explicação */}
             <div className="flex-1">
                 <input
                     type="file"
@@ -130,7 +130,10 @@ export function ProfileImageUpload({
                 >
                     {previewUrl ? "Alterar foto" : "Adicionar foto"}
                 </Button>
-                <p className="text-xs text-gray-500 mt-2">
+                <p className="text-sm text-gray-600 mt-2">
+                    Sua foto profissional para o site
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
                     JPG, PNG ou GIF. Máximo 5MB.
                 </p>
                 {error && (

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Sidebar } from "./sidebar";
 import { Header } from "./header";
+import { SkipLink } from "@/components/ui/skip-link";
 
 interface DashboardShellProps {
     children: React.ReactNode;
@@ -18,6 +19,9 @@ export function DashboardShell({ children, user }: DashboardShellProps) {
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
+            {/* Skip link para acessibilidade */}
+            <SkipLink />
+
             {/* Sidebar */}
             <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -27,10 +31,11 @@ export function DashboardShell({ children, user }: DashboardShellProps) {
                 <Header user={user} onMenuClick={() => setSidebarOpen(true)} />
 
                 {/* Page content */}
-                <main className="flex-1 p-4 lg:p-6 overflow-auto">
+                <main id="main-content" className="flex-1 p-4 lg:p-6 overflow-auto">
                     {children}
                 </main>
             </div>
         </div>
     );
 }
+

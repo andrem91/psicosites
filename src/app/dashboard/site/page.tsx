@@ -91,7 +91,7 @@ export default async function SitePage() {
                     </p>
                 </div>
                 <a
-                    href={`http://localhost:3000/site/${site.subdomain}`}
+                    href={`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/site/${site.subdomain}`}
                     target="_blank"
                     rel="noopener noreferrer"
                 >

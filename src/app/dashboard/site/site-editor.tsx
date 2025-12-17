@@ -15,6 +15,12 @@ import { SpecialtyEditor } from "@/components/site/specialty-editor";
 import { Specialty } from "@/types/specialty";
 import { updateProfile, updateSiteConfig, togglePublishSite } from "./actions";
 
+// Função para remover tags HTML de uma string
+function stripHtml(html: string): string {
+    if (!html) return "";
+    return html.replace(/<[^>]*>/g, "").trim();
+}
+
 // Paleta de cores adequada para psicólogos
 const PRESET_COLORS = [
     { name: "Azul Serenidade", value: "#5B8FB9" },
@@ -105,7 +111,7 @@ export function SiteEditor({ profile, site }: SiteEditorProps) {
 
     const [seoData, setSeoData] = useState({
         site_title: site.site_title || "",
-        meta_description: site.meta_description || "",
+        meta_description: stripHtml(site.meta_description || ""),
     });
 
     // State para especialidades (agora com tipo Specialty[])
@@ -221,7 +227,7 @@ export function SiteEditor({ profile, site }: SiteEditorProps) {
                     <div>
                         <p className="text-sm text-gray-500 mb-1">Endereço do seu site:</p>
                         <a
-                            href={`http://localhost:3000/site/${site.subdomain}`}
+                            href={`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/site/${site.subdomain}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-indigo-600 font-medium hover:underline"
@@ -600,7 +606,7 @@ export function SiteEditor({ profile, site }: SiteEditorProps) {
                                     Cor principal do site
                                 </label>
                                 <p className="text-sm text-gray-500 mb-4">
-                                    Cores selecionadas para transmitir calma em e profissionalismo
+                                    Cores selecionadas para transmitir calma e profissionalismo
                                 </p>
                                 <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
                                     {PRESET_COLORS.map((color) => (

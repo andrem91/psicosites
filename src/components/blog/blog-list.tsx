@@ -147,7 +147,7 @@ export function BlogList({ posts: initialPosts, subdomain }: BlogListProps) {
                             <div className="flex items-center gap-2">
                                 {post.is_published && (
                                     <a
-                                        href={`http://${subdomain}.localhost:3000/blog/${post.slug}`}
+                                        href={`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/site/${subdomain}/blog/${post.slug}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="p-2 text-gray-400 hover:text-indigo-600 transition-colors"

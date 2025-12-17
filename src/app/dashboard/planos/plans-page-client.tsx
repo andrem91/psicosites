@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
 // Definição dos planos
@@ -86,7 +87,7 @@ export function PlansPageClient({ currentPlan }: PlansPageClientProps) {
         // TODO: Integrar com Asaas para pagamento
         // Por enquanto, apenas simula o processo
         setTimeout(() => {
-            alert("Em breve! Estamos finalizando a integração de pagamentos.");
+            toast.info("Em breve! Estamos finalizando a integração de pagamentos.");
             setIsLoading(false);
             setSelectedPlan(null);
         }, 1000);
@@ -119,8 +120,8 @@ export function PlansPageClient({ currentPlan }: PlansPageClientProps) {
                     <div
                         key={plan.id}
                         className={`relative bg-white rounded-2xl border-2 p-8 transition-all ${plan.popular
-                                ? "border-indigo-500 shadow-xl scale-[1.02]"
-                                : "border-gray-200 hover:border-gray-300"
+                            ? "border-indigo-500 shadow-xl scale-[1.02]"
+                            : "border-gray-200 hover:border-gray-300"
                             }`}
                     >
                         {/* Badge Popular */}
