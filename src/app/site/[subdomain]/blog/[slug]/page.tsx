@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { sanitizeHtml } from "@/lib/sanitize";
 
 interface BlogPostPageProps {
@@ -143,12 +144,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     {/* Autor */}
                     <div className="flex items-center gap-4">
                         {profile?.profile_image_url ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                                src={profile.profile_image_url}
-                                alt={profile.full_name || ""}
-                                className="w-12 h-12 rounded-full object-cover"
-                            />
+                            <div className="relative w-12 h-12">
+                                <Image
+                                    src={profile.profile_image_url}
+                                    alt={profile.full_name || ""}
+                                    fill
+                                    className="rounded-full object-cover"
+                                    sizes="48px"
+                                />
+                            </div>
                         ) : (
                             <div
                                 className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold"
@@ -168,12 +172,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
                 {/* Imagem de capa */}
                 {post.featured_image_url && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                        src={post.featured_image_url}
-                        alt={post.title}
-                        className="w-full h-auto rounded-2xl mb-8"
-                    />
+                    <div className="relative w-full aspect-video mb-8">
+                        <Image
+                            src={post.featured_image_url}
+                            alt={post.title}
+                            fill
+                            className="rounded-2xl object-cover"
+                            sizes="(max-width: 768px) 100vw, 768px"
+                            priority
+                        />
+                    </div>
                 )}
 
                 {/* Conteúdo */}

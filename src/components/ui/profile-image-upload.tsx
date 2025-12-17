@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 interface ProfileImageUploadProps {
@@ -77,11 +78,12 @@ export function ProfileImageUpload({
             <div className="relative">
                 <div className="w-24 h-24 rounded-full bg-gray-100 overflow-hidden border-4 border-white shadow-lg">
                     {previewUrl ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                        <Image
                             src={previewUrl}
                             alt="Foto de perfil"
-                            className="w-full h-full object-cover"
+                            fill
+                            className="object-cover"
+                            sizes="96px"
                         />
                     ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-400">

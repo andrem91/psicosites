@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 interface LogoUploadProps {
@@ -78,11 +79,12 @@ export function LogoUpload({
             <div className="relative">
                 <div className="w-20 h-20 rounded-xl bg-gray-100 overflow-hidden border-2 border-gray-200 flex items-center justify-center">
                     {previewUrl ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                        <Image
                             src={previewUrl}
                             alt="Logo"
-                            className="w-full h-full object-contain"
+                            fill
+                            className="object-contain"
+                            sizes="80px"
                         />
                     ) : (
                         <div className="text-gray-400">

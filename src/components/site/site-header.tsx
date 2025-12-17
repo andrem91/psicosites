@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { ScrollLink } from "@/components/ui/scroll-link";
 
@@ -25,12 +26,15 @@ export function SiteHeader({
                 {/* Logo / Nome */}
                 <Link href="/" className="flex items-center gap-3">
                     {logo ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                            src={logo}
-                            alt={siteName}
-                            className="w-10 h-10 rounded-full object-cover"
-                        />
+                        <div className="relative w-10 h-10">
+                            <Image
+                                src={logo}
+                                alt={siteName}
+                                fill
+                                className="rounded-full object-cover"
+                                sizes="40px"
+                            />
+                        </div>
                     ) : (
                         <div
                             className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold"

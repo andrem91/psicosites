@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { SiteProfile, SiteSectionProps } from "@/types/site-types";
 import { sanitizeHtml } from "@/lib/sanitize";
 import { ScrollLink } from "@/components/ui/scroll-link";
@@ -27,14 +28,16 @@ export function SiteHeroSection({ profile, primaryColor }: SiteHeroProps) {
                                     className="absolute -inset-4 rounded-3xl opacity-20 blur-2xl"
                                     style={{ backgroundColor: primaryColor }}
                                 />
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img
-                                    src={profile.profile_image_url}
-                                    alt={profile.full_name}
-                                    className="relative w-80 h-80 lg:w-[512px] lg:h-[512px] object-cover rounded-3xl shadow-2xl"
-                                    style={{ imageRendering: 'auto' }}
-                                    loading="eager"
-                                />
+                                <div className="relative w-80 h-80 lg:w-[512px] lg:h-[512px]">
+                                    <Image
+                                        src={profile.profile_image_url}
+                                        alt={profile.full_name}
+                                        fill
+                                        className="object-cover rounded-3xl shadow-2xl"
+                                        sizes="(max-width: 1024px) 320px, 512px"
+                                        priority
+                                    />
+                                </div>
                                 {/* Detalhe decorativo */}
                                 <div
                                     className="absolute -bottom-3 -left-3 w-24 h-24 rounded-2xl -z-10"

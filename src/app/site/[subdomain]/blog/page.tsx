@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 interface BlogPageProps {
     params: Promise<{ subdomain: string }>;
@@ -88,12 +89,15 @@ export default async function BlogListPage({ params }: BlogPageProps) {
                                 <Link href={`/blog/${post.slug}`} className="flex flex-col md:flex-row">
                                     {/* Imagem */}
                                     {post.featured_image_url ? (
-                                        // eslint-disable-next-line @next/next/no-img-element
-                                        <img
-                                            src={post.featured_image_url}
-                                            alt={post.title}
-                                            className="w-full md:w-72 h-48 object-cover"
-                                        />
+                                        <div className="relative w-full md:w-72 h-48">
+                                            <Image
+                                                src={post.featured_image_url}
+                                                alt={post.title}
+                                                fill
+                                                className="object-cover"
+                                                sizes="(max-width: 768px) 100vw, 288px"
+                                            />
+                                        </div>
                                     ) : (
                                         <div
                                             className="w-full md:w-72 h-48 flex items-center justify-center"

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/app/(auth)/actions";
 
@@ -49,13 +50,14 @@ export function Header({ user, onMenuClick }: HeaderProps) {
                     {/* Perfil */}
                     <div className="flex items-center gap-3">
                         {/* Avatar */}
-                        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center">
+                        <div className="relative w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center overflow-hidden">
                             {user.avatar ? (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
+                                <Image
                                     src={user.avatar}
                                     alt={user.name}
-                                    className="w-full h-full rounded-full object-cover"
+                                    fill
+                                    className="object-cover"
+                                    sizes="36px"
                                 />
                             ) : (
                                 <span className="text-white font-medium text-sm">
