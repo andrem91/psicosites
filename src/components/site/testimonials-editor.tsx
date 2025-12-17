@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { FormInput as Input } from "@/components/ui/form-input";
 import {
@@ -75,9 +76,13 @@ export function TestimonialsEditor({ siteId }: TestimonialsEditorProps) {
                 setNewContent("");
                 setNewRating(5);
                 setIsAdding(false);
+                toast.success("Depoimento adicionado!");
+            } else {
+                toast.error("Erro ao adicionar depoimento");
             }
         } catch (error) {
             console.error("Erro ao adicionar depoimento:", error);
+            toast.error("Erro ao adicionar depoimento");
         }
         setLoading(false);
     };
@@ -114,9 +119,13 @@ export function TestimonialsEditor({ siteId }: TestimonialsEditorProps) {
                     )
                 );
                 setEditingId(null);
+                toast.success("Depoimento atualizado!");
+            } else {
+                toast.error("Erro ao atualizar depoimento");
             }
         } catch (error) {
             console.error("Erro ao atualizar depoimento:", error);
+            toast.error("Erro ao atualizar depoimento");
         }
         setLoading(false);
     };
@@ -127,9 +136,13 @@ export function TestimonialsEditor({ siteId }: TestimonialsEditorProps) {
             const res = await fetch(`/api/site/testimonials?id=${id}`, { method: "DELETE" });
             if (res.ok) {
                 setTestimonials(testimonials.filter((t) => t.id !== id));
+                toast.success("Depoimento excluído!");
+            } else {
+                toast.error("Erro ao excluir depoimento");
             }
         } catch (error) {
             console.error("Erro ao excluir depoimento:", error);
+            toast.error("Erro ao excluir depoimento");
         }
         setLoading(false);
         setDeleteId(null);

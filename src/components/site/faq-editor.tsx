@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { FormInput as Input } from "@/components/ui/form-input";
 import {
@@ -97,9 +98,13 @@ export function FAQEditor({ siteId, initialFaqs = [] }: FAQEditorProps) {
                 setNewQuestion("");
                 setNewAnswer("");
                 setIsAdding(false);
+                toast.success("Pergunta adicionada!");
+            } else {
+                toast.error("Erro ao adicionar pergunta");
             }
         } catch (error) {
             console.error("Erro ao adicionar FAQ:", error);
+            toast.error("Erro ao adicionar pergunta");
         }
         setLoading(false);
     };
@@ -116,9 +121,13 @@ export function FAQEditor({ siteId, initialFaqs = [] }: FAQEditorProps) {
             if (res.ok) {
                 const data = await res.json();
                 setFaqs([...faqs, data.faq]);
+                toast.success("Sugestão adicionada!");
+            } else {
+                toast.error("Erro ao adicionar sugestão");
             }
         } catch (error) {
             console.error("Erro ao adicionar FAQ:", error);
+            toast.error("Erro ao adicionar sugestão");
         }
         setLoading(false);
     };
@@ -151,9 +160,13 @@ export function FAQEditor({ siteId, initialFaqs = [] }: FAQEditorProps) {
                     )
                 );
                 setEditingId(null);
+                toast.success("Pergunta atualizada!");
+            } else {
+                toast.error("Erro ao atualizar pergunta");
             }
         } catch (error) {
             console.error("Erro ao atualizar FAQ:", error);
+            toast.error("Erro ao atualizar pergunta");
         }
         setLoading(false);
     };
@@ -164,9 +177,13 @@ export function FAQEditor({ siteId, initialFaqs = [] }: FAQEditorProps) {
             const res = await fetch(`/api/site/faqs?id=${id}`, { method: "DELETE" });
             if (res.ok) {
                 setFaqs(faqs.filter((f) => f.id !== id));
+                toast.success("Pergunta excluída!");
+            } else {
+                toast.error("Erro ao excluir pergunta");
             }
         } catch (error) {
             console.error("Erro ao excluir FAQ:", error);
+            toast.error("Erro ao excluir pergunta");
         }
         setLoading(false);
         setDeleteId(null);

@@ -2,6 +2,17 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "sonner";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface BlogPost {
     id: string;
@@ -22,20 +33,24 @@ interface BlogListProps {
 export function BlogList({ posts: initialPosts, subdomain }: BlogListProps) {
     const [posts, setPosts] = useState(initialPosts);
     const [deleting, setDeleting] = useState<string | null>(null);
+    const [deleteId, setDeleteId] = useState<string | null>(null);
 
     const handleDelete = async (id: string) => {
-        if (!confirm("Tem certeza que deseja excluir este artigo?")) return;
-
         setDeleting(id);
         try {
             const res = await fetch(`/api/blog?id=${id}`, { method: "DELETE" });
             if (res.ok) {
                 setPosts(posts.filter((p) => p.id !== id));
+                toast.success("Artigo excluído com sucesso!");
+            } else {
+                toast.error("Erro ao excluir artigo");
             }
         } catch (error) {
             console.error("Erro ao excluir:", error);
+            toast.error("Erro ao excluir artigo");
         }
         setDeleting(null);
+        setDeleteId(null);
     };
 
     const formatDate = (date: string) => {
@@ -143,7 +158,7 @@ export function BlogList({ posts: initialPosts, subdomain }: BlogListProps) {
                                     </svg>
                                 </Link>
                                 <button
-                                    onClick={() => handleDelete(post.id)}
+                                    onClick={() => setDeleteId(post.id)}
                                     disabled={deleting === post.id}
                                     className="p-2 text-gray-400 hover:text-red-600 transition-colors disabled:opacity-50"
                                     title="Excluir"
@@ -157,6 +172,27 @@ export function BlogList({ posts: initialPosts, subdomain }: BlogListProps) {
                     </div>
                 ))}
             </div>
+
+            {/* Alert Dialog de confirmação */}
+            <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Tem certeza que deseja excluir este artigo? Esta ação não pode ser desfeita.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                            onClick={() => deleteId && handleDelete(deleteId)}
+                            className="bg-red-600 hover:bg-red-700"
+                        >
+                            Excluir
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 }
