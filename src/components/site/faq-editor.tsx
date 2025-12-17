@@ -3,6 +3,16 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { FormInput as Input } from "@/components/ui/form-input";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface FAQ {
     id: string;
@@ -51,6 +61,7 @@ export function FAQEditor({ siteId, initialFaqs = [] }: FAQEditorProps) {
     const [isAdding, setIsAdding] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const [deleteId, setDeleteId] = useState<string | null>(null);
 
     const loadFaqs = async () => {
         try {
@@ -148,8 +159,6 @@ export function FAQEditor({ siteId, initialFaqs = [] }: FAQEditorProps) {
     };
 
     const handleDelete = async (id: string) => {
-        if (!confirm("Tem certeza que deseja excluir esta pergunta?")) return;
-
         setLoading(true);
         try {
             const res = await fetch(`/api/site/faqs?id=${id}`, { method: "DELETE" });
@@ -160,6 +169,7 @@ export function FAQEditor({ siteId, initialFaqs = [] }: FAQEditorProps) {
             console.error("Erro ao excluir FAQ:", error);
         }
         setLoading(false);
+        setDeleteId(null);
     };
 
     // Verificar quais sugestões já foram adicionadas
@@ -231,7 +241,7 @@ export function FAQEditor({ siteId, initialFaqs = [] }: FAQEditorProps) {
                                             Editar
                                         </button>
                                         <button
-                                            onClick={() => handleDelete(faq.id)}
+                                            onClick={() => setDeleteId(faq.id)}
                                             className="text-red-500 hover:text-red-700 text-sm"
                                         >
                                             Excluir
@@ -297,6 +307,26 @@ export function FAQEditor({ siteId, initialFaqs = [] }: FAQEditorProps) {
                     </div>
                 </div>
             )}
+            {/* Alert Dialog de confirmação */}
+            <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Tem certeza que deseja excluir esta pergunta? Esta ação não pode ser desfeita.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                            onClick={() => deleteId && handleDelete(deleteId)}
+                            className="bg-red-600 hover:bg-red-700"
+                        >
+                            Excluir
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 }

@@ -3,6 +3,16 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { FormInput as Input } from "@/components/ui/form-input";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface Testimonial {
     id: string;
@@ -28,6 +38,7 @@ export function TestimonialsEditor({ siteId }: TestimonialsEditorProps) {
     const [newRating, setNewRating] = useState(5);
     const [isAdding, setIsAdding] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [deleteId, setDeleteId] = useState<string | null>(null);
 
     const loadTestimonials = async () => {
         try {
@@ -111,8 +122,6 @@ export function TestimonialsEditor({ siteId }: TestimonialsEditorProps) {
     };
 
     const handleDelete = async (id: string) => {
-        if (!confirm("Tem certeza que deseja excluir este depoimento?")) return;
-
         setLoading(true);
         try {
             const res = await fetch(`/api/site/testimonials?id=${id}`, { method: "DELETE" });
@@ -123,6 +132,7 @@ export function TestimonialsEditor({ siteId }: TestimonialsEditorProps) {
             console.error("Erro ao excluir depoimento:", error);
         }
         setLoading(false);
+        setDeleteId(null);
     };
 
     const StarRating = ({ rating, onChange }: { rating: number; onChange?: (r: number) => void }) => (
@@ -221,7 +231,7 @@ export function TestimonialsEditor({ siteId }: TestimonialsEditorProps) {
                                             Editar
                                         </button>
                                         <button
-                                            onClick={() => handleDelete(testimonial.id)}
+                                            onClick={() => setDeleteId(testimonial.id)}
                                             className="text-red-500 hover:text-red-700 text-sm"
                                         >
                                             Excluir
@@ -265,6 +275,26 @@ export function TestimonialsEditor({ siteId }: TestimonialsEditorProps) {
                     </div>
                 </div>
             )}
+            {/* Alert Dialog de confirmação */}
+            <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Tem certeza que deseja excluir este depoimento? Esta ação não pode ser desfeita.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                            onClick={() => deleteId && handleDelete(deleteId)}
+                            className="bg-red-600 hover:bg-red-700"
+                        >
+                            Excluir
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 }
