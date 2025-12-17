@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { FormInput as Input } from "@/components/ui/form-input";
+import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ProfileImageUpload } from "@/components/ui/profile-image-upload";
 import { LogoUpload } from "@/components/ui/logo-upload";
@@ -343,8 +344,8 @@ export function SiteEditor({ profile, site }: SiteEditorProps) {
                                     Frase de apresentação
                                     <span className="text-gray-400 font-normal ml-2">(exibida no topo do site)</span>
                                 </label>
-                                <textarea
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none text-gray-900"
+                                <Textarea
+                                    className="resize-none text-gray-900"
                                     rows={2}
                                     placeholder="Ex: Psicóloga clínica especializada em ansiedade e desenvolvimento pessoal"
                                     value={profileData.bio_short}
@@ -554,8 +555,8 @@ export function SiteEditor({ profile, site }: SiteEditorProps) {
                                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                                         Embed personalizado do Google Maps
                                                     </label>
-                                                    <textarea
-                                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl font-mono text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none text-gray-900"
+                                                    <Textarea
+                                                        className="font-mono resize-none text-gray-900"
                                                         rows={3}
                                                         placeholder='<iframe src="https://www.google.com/maps/embed?..." ...></iframe>'
                                                         value={attendanceData.google_maps_embed}
@@ -694,8 +695,8 @@ export function SiteEditor({ profile, site }: SiteEditorProps) {
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Descrição para buscadores (Meta Description)
                                 </label>
-                                <textarea
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none text-gray-900"
+                                <Textarea
+                                    className="resize-none text-gray-900"
                                     rows={3}
                                     placeholder="Descreva seu trabalho em 1-2 frases. Isso aparece nos resultados do Google."
                                     value={seoData.meta_description}
