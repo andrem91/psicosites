@@ -268,21 +268,39 @@ export default async function DashboardPage() {
                 </h2>
                 <ul className="space-y-3">
                     <li className="flex items-start gap-3 text-sm text-gray-600">
-                        <span className="text-green-500 mt-1">✓</span>
+                        <span className="text-amber-500 mt-0.5">💡</span>
                         <span>
-                            Adicione uma foto profissional para aumentar a confiança dos pacientes
+                            <strong>Publique seu site</strong> para que pacientes possam encontrá-lo
                         </span>
                     </li>
                     <li className="flex items-start gap-3 text-sm text-gray-600">
-                        <span className="text-green-500 mt-1">✓</span>
+                        <span className="text-amber-500 mt-0.5">💡</span>
                         <span>
-                            Preencha suas especialidades para aparecer em buscas relacionadas
+                            <strong>Adicione depoimentos</strong> de pacientes para gerar confiança
                         </span>
                     </li>
                     <li className="flex items-start gap-3 text-sm text-gray-600">
-                        <span className="text-green-500 mt-1">✓</span>
+                        <span className="text-amber-500 mt-0.5">💡</span>
                         <span>
-                            Configure seu WhatsApp para receber contatos diretamente pelo site
+                            <strong>Preencha o FAQ</strong> com dúvidas frequentes para ajudar pacientes
+                        </span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm text-gray-600">
+                        <span className="text-amber-500 mt-0.5">💡</span>
+                        <span>
+                            <strong>Personalize as cores</strong> do site para refletir sua identidade
+                        </span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm text-gray-600">
+                        <span className="text-amber-500 mt-0.5">💡</span>
+                        <span>
+                            <strong>Compartilhe seu site</strong> nas redes sociais e WhatsApp
+                        </span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm text-gray-600">
+                        <span className="text-amber-500 mt-0.5">💡</span>
+                        <span>
+                            <strong>Mantenha o texto &quot;Sobre mim&quot;</strong> atualizado e autêntico
                         </span>
                     </li>
                 </ul>

@@ -1,5 +1,6 @@
 import { SiteSectionProps, SiteProfile } from "@/types/site-types";
 import { ContactForm } from "@/components/site/contact-form";
+import { formatPhone } from "@/lib/phone-format";
 
 interface SiteContactSectionProps extends SiteSectionProps {
     profile: SiteProfile;
@@ -47,7 +48,7 @@ export function SiteContactSection({ profile, primaryColor }: SiteContactSection
                                         </svg>
                                         <div>
                                             <p className="font-semibold">WhatsApp</p>
-                                            <p className="text-sm opacity-90">{profile.whatsapp}</p>
+                                            <p className="text-sm opacity-90">{formatPhone(profile.whatsapp)}</p>
                                         </div>
                                     </a>
                                 )}

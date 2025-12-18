@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { formatPhone } from "@/lib/phone-format";
 
 interface SiteFooterProps {
     siteName: string;
@@ -53,7 +54,7 @@ export function SiteFooter({
                                         rel="noopener noreferrer"
                                         className="hover:text-white transition-colors"
                                     >
-                                        📱 {whatsapp}
+                                        📱 {formatPhone(whatsapp)}
                                     </a>
                                 </li>
                             )}

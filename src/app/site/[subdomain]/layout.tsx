@@ -63,6 +63,7 @@ export default async function SiteLayout({ children, params }: SiteLayoutProps) 
                 navItems={[
                     { label: "Início", href: "/" },
                     { label: "Sobre", href: "/#sobre" },
+                    { label: "Especialidades", href: "/#especialidades" },
                     { label: "Blog", href: "/blog" },
                     { label: "Contato", href: "/#contato" },
                 ]}
