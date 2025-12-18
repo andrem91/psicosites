@@ -64,7 +64,7 @@ export default async function SiteLayout({ children, params }: SiteLayoutProps) 
                     { label: "Início", href: "/" },
                     { label: "Sobre", href: "/#sobre" },
                     { label: "Especialidades", href: "/#especialidades" },
-                    { label: "Blog", href: "/blog" },
+                    ...(site.show_blog !== false ? [{ label: "Blog", href: "/blog" }] : []),
                     { label: "Contato", href: "/#contato" },
                 ]}
             />

@@ -14,6 +14,7 @@ interface ThemeConfig {
 interface SiteData {
     id: string;
     subdomain: string;
+    show_blog: boolean | null;
     theme_config: ThemeConfig | null;
     profiles: { full_name: string | null } | null;
 }
@@ -27,6 +28,7 @@ async function getSiteData(subdomain: string): Promise<SiteData | null> {
         .select(`
             id,
             subdomain,
+            show_blog,
             theme_config,
             profiles (
                 full_name
@@ -44,6 +46,11 @@ export default async function BlogListPage({ params }: BlogPageProps) {
     const site = await getSiteData(subdomain);
 
     if (!site) {
+        notFound();
+    }
+
+    // Se o blog estiver desativado, retornar 404
+    if (site.show_blog === false) {
         notFound();
     }
 

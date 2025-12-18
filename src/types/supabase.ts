@@ -334,6 +334,7 @@ export type Database = {
           meta_description: string | null
           meta_keywords: string | null
           profile_id: string
+          show_blog: boolean | null
           site_title: string | null
           subdomain: string
           theme_config: Json | null
@@ -347,6 +348,7 @@ export type Database = {
           meta_description?: string | null
           meta_keywords?: string | null
           profile_id: string
+          show_blog?: boolean | null
           site_title?: string | null
           subdomain: string
           theme_config?: Json | null
@@ -360,6 +362,7 @@ export type Database = {
           meta_description?: string | null
           meta_keywords?: string | null
           profile_id?: string
+          show_blog?: boolean | null
           site_title?: string | null
           subdomain?: string
           theme_config?: Json | null

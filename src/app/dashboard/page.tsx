@@ -246,7 +246,7 @@ export default async function DashboardPage() {
                             Seu perfil está completo. Edite quando quiser.
                         </p>
                         <Link href="/dashboard/conta">
-                            <Button size="sm" variant="ghost" className="w-full text-gray-600">
+                            <Button size="sm" variant="outline" className="w-full text-gray-600">
                                 Editar perfil
                             </Button>
                         </Link>
