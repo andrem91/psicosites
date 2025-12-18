@@ -1,7 +1,7 @@
-# 🗺️ Roadmap - PsiBuilder
+# 🗺️ Roadmap - PsicoSites
 
 **Última atualização:** 18/12/2024  
-**Versão:** 2.5 (Backlog Completo)
+**Versão:** 2.6 (Beta Program Added)
 
 ---
 
@@ -15,9 +15,10 @@
 | **Fase 4 - Polimento** | 🔄 Em andamento | UX, Performance, Correções |
 | **Fase 5 - Admin** | 📋 Planejada | Painel administrativo da plataforma |
 | **Fase 6 - Feedback** | 📋 Planejada | Sistema de feedback e sugestões |
-| **Fase 7 - Monetização** | ⏳ Futuro | Pagamentos, Planos funcionais |
-| **Fase 8 - Diferenciação** | 📋 Planejada | Templates, Domínio Customizado |
-| **Fase 9 - Expansão** | 📋 Planejada | Agenda, Integrações |
+| **Fase 7 - Monetização** | ⏳ Pré-lançamento | Mercado Pago, Planos funcionais |
+| **Fase 8 - Beta Program** | 📋 Planejada | Pro grátis para testers |
+| **Fase 9 - Diferenciação** | 📋 Planejada | Templates, Domínio Customizado |
+| **Fase 10 - Expansão** | 📋 Planejada | Agenda, Integrações |
 
 ---
 
@@ -371,7 +372,21 @@
 | Múltiplos idiomas | ❌ | ❌ | ✅ |
 | Suporte prioritário | ❌ | ❌ | ✅ |
 
-### Fase 8 - Diferenciação
+### Fase 8 - Beta Program
+
+> Documentação completa: [BETA_PROGRAM.md](./BETA_PROGRAM.md)
+
+| Item | Descrição | Status |
+|------|-----------|--------|
+| Duração | 3 meses Pro grátis | ⏳ Pendente |
+| Quantidade | 30-50 psicólogos | ⏳ Pendente |
+| Formulário inscrição | Google Forms / Typeform | ⏳ Pendente |
+| Link com parâmetro | `/cadastro?beta=CODIGO` | ⏳ Pendente |
+| Grupo WhatsApp | Canal de suporte e feedback | ⏳ Pendente |
+| Coleta de depoimentos | Mês 3 | ⏳ Pendente |
+| Desconto pós-beta | 30% vitalício para conversão | ⏳ Pendente |
+
+### Fase 9 - Diferenciação
 
 #### 🌐 Domínio Personalizado
 | Etapa | Descrição |
