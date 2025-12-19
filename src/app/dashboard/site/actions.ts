@@ -26,6 +26,15 @@ interface ProfileData {
     zip_code?: string;
     // Embed personalizado
     google_maps_embed?: string;
+    // Campos opcionais extras
+    video_url?: string | null;
+    working_hours?: string | null;
+    languages?: string[];
+    target_audience?: string[];
+    methodologies?: string[];
+    certifications?: { title: string; institution: string; year?: string }[];
+    pricing?: { service: string; price: string; duration?: string }[];
+    instagram_url?: string | null;
 }
 
 interface SiteTheme {
