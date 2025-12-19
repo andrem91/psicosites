@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs";
 
 const isDev = process.env.NODE_ENV === "development";
 
@@ -49,6 +50,15 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// Sentry configuration
+export default withSentryConfig(nextConfig, {
+  // Suppress source map upload logs during build
+  silent: true,
 
+  // Organization and project slug (from Sentry dashboard)
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
 
+  // Disable logger to reduce noise
+  disableLogger: true,
+});

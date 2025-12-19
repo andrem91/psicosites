@@ -140,7 +140,7 @@
 | Item | Descrição | Status | Ferramenta |
 |------|-----------|--------|------------|
 | Rate limiting | Proteger APIs de abuso | ⏳ Pendente | Upstash (grátis) |
-| Error tracking | Saber quando algo quebra | ⏳ Pendente | Sentry (grátis) |
+| Error tracking | Saber quando algo quebra | ✅ Concluído | Sentry (grátis) |
 | Uptime monitoring | Saber se o site caiu | ⏳ Pendente | UptimeRobot (grátis) |
 
 ---
