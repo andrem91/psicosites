@@ -143,6 +143,28 @@
 | Error tracking | Saber quando algo quebra | ✅ Concluído | Sentry (grátis) |
 | Uptime monitoring | Saber se o site caiu | ⏳ Pendente | UptimeRobot (grátis) |
 
+#### 📊 Analytics de Produto (Recomendado)
+| Item | Descrição | Status | Ferramenta |
+|------|-----------|--------|------------|
+| Session Replay | Assistir como usuários usam o dashboard | 🟢 Alta | PostHog (grátis) |
+| Feature Flags | Testar funcionalidades com % de usuários | 📝 Backlog | PostHog |
+| Funil de conversão produto | Cadastro → Onboarding → Publicação | 📝 Backlog | PostHog |
+
+#### � Emails Transacionais (Recomendado)
+| Item | Descrição | Status | Ferramenta |
+|------|-----------|--------|------------|
+| Templates de email React | Boas-vindas, Recuperar senha, Notificações | 🟢 Alta | React Email |
+| Email de novo contato | Avisar psicólogo quando alguém entra em contato | �🟡 Média | Resend |
+
+#### 🌐 Domínios Customizados (Recomendado)
+| Item | Descrição | Status | Fase |
+|------|-----------|--------|------|
+| UI para custom_domain | Campo no dashboard + instruções DNS | 🟢 Alta | MVP |
+| Middleware multi-domínio | Verificar custom_domain no banco | 🟢 Alta | MVP |
+| Botão afiliado domínios | Link Hostinger/GoDaddy com comissão | 🟢 Alta | MVP |
+| Vercel Domains API | Adicionar domínio automaticamente | 📝 Backlog | v2 |
+| Verificação DNS tempo real | Mostrar status do apontamento | 📝 Backlog | v2 |
+
 ---
 
 ### 🟡 Médio (2-4 horas cada)
@@ -157,15 +179,28 @@
 | Limit 3 especialidades Free | Restringir plano gratuito | ⏳ Pendente |
 
 #### Blog
-| Item | Descrição | Status |
-|------|-----------|--------|
-| Migrar para Sanity CMS | Headless CMS para melhor UX de edição | 📋 Backlog |
-| Duplicar artigo | Clonar post existente | 📋 Backlog |
+| Item | Descrição | Status | Ferramenta |
+|------|-----------|--------|------------|
+| Editor estilo Notion | Slash commands, drag blocks, menu flutuante | 🟡 Média | Novel |
+| Upload imagem no texto | Drag & drop imagens no editor | � Média | Tiptap/Novel |
+| Duplicar artigo | Clonar post existente | � Backlog | - |
 
 #### Página Pública do Psicólogo
-| Item | Descrição | Status |
-|------|-----------|--------|
-| Selo "Verificado CRP" | Badge visual de verificação | ⏳ Pendente |
+| Item | Descrição | Status | Ferramenta |
+|------|-----------|--------|------------|
+| Selo "Verificado CRP" | Badge visual de verificação | ⏳ Pendente | - |
+| Reordenar seções drag & drop | Usuário escolhe ordem das seções | 🟡 Média | dnd-kit |
+
+#### 🖼️ Imagens (Futuro)
+| Item | Descrição | Status | Ferramenta |
+|------|-----------|--------|------------|
+| Auto-crop facial | Recorte inteligente focado no rosto | 📝 Backlog v2 | Cloudinary |
+| Otimização automática | WebP/AVIF dinâmico por browser | 📝 Backlog v2 | Cloudinary |
+
+#### 🎨 Editor Visual (Futuro v2)
+| Item | Descrição | Status | Ferramenta |
+|------|-----------|--------|------------|
+| Visual builder drag & drop | Arrastar componentes estilo Wix | 📝 Backlog v2 | Puck |
 
 #### Analytics
 | Item | Descrição | Status |
