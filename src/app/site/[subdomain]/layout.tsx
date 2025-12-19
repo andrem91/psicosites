@@ -26,7 +26,14 @@ async function getSiteData(subdomain: string) {
         specialties,
         bio,
         profile_image_url,
-        logo_url
+        logo_url,
+        in_person_service,
+        street,
+        street_number,
+        neighborhood,
+        city,
+        state,
+        social_links
       )
     `
         )
@@ -96,6 +103,14 @@ export default async function SiteLayout({ children, params }: SiteLayoutProps) 
                     whatsapp={profile?.whatsapp}
                     primaryColor={primaryColor}
                     showLgpd={site.show_lgpd_section !== false}
+                    showBlog={site.show_blog !== false}
+                    socialLinks={profile?.social_links || []}
+                    inPersonService={profile?.in_person_service}
+                    street={profile?.street}
+                    streetNumber={profile?.street_number}
+                    neighborhood={profile?.neighborhood}
+                    city={profile?.city}
+                    state={profile?.state}
                 />
 
                 {/* Botão WhatsApp flutuante */}
@@ -109,4 +124,5 @@ export default async function SiteLayout({ children, params }: SiteLayoutProps) 
         </>
     );
 }
+
 

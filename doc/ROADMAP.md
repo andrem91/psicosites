@@ -245,12 +245,12 @@
 
 | Item | Descrição | Status |
 |------|-----------|--------|
-| Reestruturar layout | Colunas: Navegação, Redes Sociais, Contato | ⏳ Pendente |
-| Links de navegação | Início, Sobre, Especialidades, Blog, Contato | ⏳ Pendente |
-| Redes sociais no footer | Ícones das redes configuradas | ⏳ Pendente |
-| Endereço do consultório | Exibir se atende presencial | ⏳ Pendente |
-| Mover políticas | Privacidade e Cookies na linha inferior | ⏳ Pendente |
-| Crédito PsicoSites | "Desenvolvido por PsicoSites" | ⏳ Pendente |
+| Reestruturar layout | Colunas: Navegação, Redes Sociais, Contato | ✅ Concluído |
+| Links de navegação | Início, Sobre, Especialidades, Blog, Contato | ✅ Concluído |
+| Redes sociais no footer | Ícones das redes configuradas | ✅ Concluído |
+| Endereço do consultório | Exibir se atende presencial | ✅ Concluído |
+| Mover políticas | Privacidade e Cookies na linha inferior | ✅ Concluído |
+| Crédito PsicoSites | "Desenvolvido por PsicoSites" | ✅ Concluído |
 
 ### Melhorias Visuais
 
