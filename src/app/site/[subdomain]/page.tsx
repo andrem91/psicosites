@@ -14,6 +14,11 @@ import {
     SiteFAQSection,
     SiteEthicsSection,
 } from "@/components/site/sections";
+import { SiteVideoSection } from "@/components/site/sections/site-video";
+import { SiteCertificationsSection } from "@/components/site/sections/site-certifications";
+import { SitePricingSection } from "@/components/site/sections/site-pricing";
+import { SiteInfoSection } from "@/components/site/sections/site-info";
+import { FloatingInstagramButton } from "@/components/site/floating-instagram";
 
 interface SitePageProps {
     params: Promise<{ subdomain: string }>;
@@ -46,6 +51,8 @@ async function getSiteData(subdomain: string): Promise<SiteData | null> {
         email,
         whatsapp,
         crp,
+        gender,
+        professional_title,
         specialties,
         specialties_data,
         bio,
@@ -61,7 +68,16 @@ async function getSiteData(subdomain: string): Promise<SiteData | null> {
         city,
         state,
         zip_code,
-        google_maps_embed
+        google_maps_embed,
+        social_links,
+        video_url,
+        working_hours,
+        languages,
+        target_audience,
+        methodologies,
+        certifications,
+        pricing,
+        instagram_url
       )
     `
         )
@@ -146,6 +162,9 @@ export default async function SiteHomePage({ params }: SitePageProps) {
             {/* Hero Section */}
             <SiteHeroSection profile={profile} primaryColor={primaryColor} />
 
+            {/* Vídeo de Apresentação (opcional) */}
+            <SiteVideoSection profile={profile} primaryColor={primaryColor} />
+
             {/* Sobre Section */}
             <SiteAboutSection bio={profile?.bio} primaryColor={primaryColor} />
 
@@ -155,6 +174,15 @@ export default async function SiteHomePage({ params }: SitePageProps) {
                 specialtiesData={profile?.specialties_data as SiteSpecialty[]}
                 primaryColor={primaryColor}
             />
+
+            {/* Informações do Atendimento (horários, idiomas, público-alvo, metodologias) */}
+            <SiteInfoSection profile={profile} primaryColor={primaryColor} />
+
+            {/* Certificações e Formações (opcional) */}
+            <SiteCertificationsSection profile={profile} primaryColor={primaryColor} />
+
+            {/* Preços/Valores (opcional) */}
+            <SitePricingSection profile={profile} primaryColor={primaryColor} />
 
             {/* Modalidades de Atendimento */}
             <SiteModalitiesSection
@@ -184,6 +212,13 @@ export default async function SiteHomePage({ params }: SitePageProps) {
                 ethicsContent={site.ethics_content}
                 primaryColor={primaryColor}
             />
+
+            {/* Botão flutuante Instagram (opcional) */}
+            <FloatingInstagramButton
+                instagramUrl={profile?.instagram_url}
+                primaryColor={primaryColor}
+            />
         </>
     );
 }
+

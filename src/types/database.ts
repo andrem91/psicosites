@@ -48,6 +48,20 @@ export interface SocialLink {
     url: string;
 }
 
+// Certificação/Formação
+export interface Certification {
+    title: string;
+    institution: string;
+    year?: string;
+}
+
+// Item de Preço
+export interface PricingItem {
+    service: string;
+    price: string;
+    duration?: string;
+}
+
 // Perfil do psicólogo
 export interface Profile {
     id: string;
@@ -69,6 +83,15 @@ export interface Profile {
     online_service: boolean;
     in_person_service: boolean;
     social_links: SocialLink[];
+    // Novos campos opcionais
+    video_url: string | null;
+    working_hours: string | null;
+    languages: string[];
+    target_audience: string[];
+    methodologies: string[];
+    certifications: Certification[];
+    pricing: PricingItem[];
+    instagram_url: string | null;
     created_at: string;
     updated_at: string;
 }

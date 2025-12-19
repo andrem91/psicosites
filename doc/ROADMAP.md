@@ -108,14 +108,14 @@
 | Item | Descrição | Status |
 |------|-----------|--------|
 | Redes sociais dinâmicas | Instagram, LinkedIn, Facebook, TikTok, YouTube | ✅ Concluído |
-| Vídeo de apresentação | Embed de YouTube/Vimeo no hero (opcional) | ⏳ Pendente |
-| Certificações/Formações | Seção com cursos e especializações | ⏳ Pendente |
-| Preços/Valores | Tabela de preços (opcional) | ⏳ Pendente |
-| Botão Instagram flutuante | Além do WhatsApp | ⏳ Pendente |
-| Horários de atendimento | "Seg-Sex, 8h-20h" com dias e horários | ⏳ Pendente |
-| Metodologias/Abordagens | TCC, Psicanálise, Gestalt, EMDR, etc | ⏳ Pendente |
-| Público-alvo | Crianças, adultos, casais, idosos, empresas | ⏳ Pendente |
-| Idiomas de atendimento | "Atendo em Inglês, Espanhol" | ⏳ Pendente |
+| Vídeo de apresentação | Embed de YouTube/Vimeo no hero (opcional) | ✅ Concluído |
+| Certificações/Formações | Seção com cursos e especializações | ✅ Concluído |
+| Preços/Valores | Tabela de preços (opcional) | ✅ Concluído |
+| Botão Instagram flutuante | Além do WhatsApp | ✅ Concluído |
+| Horários de atendimento | "Seg-Sex, 8h-20h" com dias e horários | ✅ Concluído |
+| Metodologias/Abordagens | TCC, Psicanálise, Gestalt, EMDR, etc | ✅ Concluído |
+| Público-alvo | Crianças, adultos, casais, idosos, empresas | ✅ Concluído |
+| Idiomas de atendimento | "Atendo em Inglês, Espanhol" | ✅ Concluído |
 | Badge Online/Presencial no Hero | Indicar tipo de atendimento no hero | ✅ Concluído |
 | Remover especialidades do Hero | Mover para seção própria | ✅ Concluído |
 

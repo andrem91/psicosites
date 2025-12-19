@@ -24,6 +24,29 @@ export interface SiteProfile {
     zip_code?: string;
     google_maps_embed?: string;
     social_links?: SocialLink[];
+    // Novos campos opcionais
+    video_url?: string;
+    working_hours?: string;
+    languages?: string[];
+    target_audience?: string[];
+    methodologies?: string[];
+    certifications?: SiteCertification[];
+    pricing?: SitePricingItem[];
+    instagram_url?: string;
+}
+
+// Certificação/Formação
+export interface SiteCertification {
+    title: string;
+    institution: string;
+    year?: string;
+}
+
+// Item de Preço
+export interface SitePricingItem {
+    service: string;
+    price: string;
+    duration?: string;
 }
 
 export interface SocialLink {
