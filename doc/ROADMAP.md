@@ -93,8 +93,8 @@
 | Comparativo de períodos | "Este mês vs mês passado" nas stats | ⏳ Pendente |
 | Reorganizar Ética/LGPD | Mover de /site para /conta, renomear para "Privacidade" | ⏳ Pendente |
 | Remover seção Ética do site público | Deixar apenas na página de Privacidade | ⏳ Pendente |
-| Campo Gênero no onboarding | Obrigatório para personalizar nomenclatura | ⏳ Pendente |
-| Campo Título Profissional | Opcional, ex: "Psicóloga Clínica", "Neuropsicólogo" | ⏳ Pendente |
+| Campo Gênero no onboarding | Obrigatório para personalizar nomenclatura | ✅ Concluído |
+| Campo Título Profissional | Opcional, ex: "Psicóloga Clínica", "Neuropsicólogo" | ✅ Concluído |
 
 #### Nomenclatura e Gênero
 | Item | Descrição | Status |
@@ -139,7 +139,7 @@
 #### Infraestrutura SaaS (Pré-Lançamento)
 | Item | Descrição | Status | Ferramenta |
 |------|-----------|--------|------------|
-| Rate limiting | Proteger APIs de abuso | ⏳ Pendente | Upstash (grátis) |
+| Rate limiting | Proteger APIs de abuso | ✅ Concluído | Upstash (grátis) |
 | Error tracking | Saber quando algo quebra | ✅ Concluído | Sentry (grátis) |
 | Uptime monitoring | Saber se o site caiu | ⏳ Pendente | UptimeRobot (grátis) |
 
