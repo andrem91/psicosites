@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
+import { checkRateLimit, getClientIP } from "@/lib/rate-limit";
 
 // API route for contact form submissions
 // In the future, this can integrate with Resend or other email providers
 export async function POST(request: NextRequest) {
+    // Rate limit: 2 requests per 60 seconds (contact forms)
+    const ip = getClientIP(request);
+    const rateLimitResult = await checkRateLimit(ip, "contact");
+    if ("status" in rateLimitResult) {
+        return rateLimitResult; // Rate limited
+    }
+
     try {
         const body = await request.json();
         const { name, email, phone: _phone, message, psychologistName: _psychologistName, psychologistEmail: _psychologistEmail } = body;

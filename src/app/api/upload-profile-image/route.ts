@@ -2,6 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 import sharp from "sharp";
+import { checkRateLimit, getClientIP } from "@/lib/rate-limit";
 
 // Configurações de imagem
 const IMAGE_CONFIG = {
@@ -23,6 +24,13 @@ const IMAGE_CONFIG = {
 };
 
 export async function POST(request: NextRequest) {
+    // Rate limit: 5 requests per 10 seconds (strict for uploads)
+    const ip = getClientIP(request);
+    const rateLimitResult = await checkRateLimit(ip, "strict");
+    if ("status" in rateLimitResult) {
+        return rateLimitResult; // Rate limited
+    }
+
     try {
         // Verificar autenticação do usuário
         const supabase = await createServerClient();

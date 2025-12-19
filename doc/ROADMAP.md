@@ -139,9 +139,9 @@
 #### Infraestrutura SaaS (Pré-Lançamento)
 | Item | Descrição | Status | Ferramenta |
 |------|-----------|--------|------------|
-| Rate limiting | Proteger APIs de abuso | ✅ Concluído | Upstash (grátis) |
+| Rate limiting | Proteger APIs de abuso (contact, upload) | ✅ Concluído | Upstash (grátis) |
 | Error tracking | Saber quando algo quebra | ✅ Concluído | Sentry (grátis) |
-| Uptime monitoring | Saber se o site caiu | ⏳ Pendente | UptimeRobot (grátis) |
+| Uptime monitoring | Saber se o site caiu + página de status | ⏳ Pendente | Better Stack (recomendado) |
 
 #### 📊 Analytics de Produto (Recomendado)
 | Item | Descrição | Status | Ferramenta |
