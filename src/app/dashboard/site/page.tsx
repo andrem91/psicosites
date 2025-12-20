@@ -128,6 +128,15 @@ export default async function SitePage() {
                     state: profile.state || "",
                     zip_code: profile.zip_code || "",
                     google_maps_embed: profile.google_maps_embed || "",
+                    // Extras
+                    video_url: profile.video_url || "",
+                    working_hours: profile.working_hours || "",
+                    languages: profile.languages || [],
+                    target_audience: profile.target_audience || [],
+                    methodologies: profile.methodologies || [],
+                    certifications: profile.certifications || [],
+                    pricing: profile.pricing || [],
+                    instagram_url: profile.instagram_url || "",
                 }}
                 site={{
                     id: site.id,

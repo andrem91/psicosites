@@ -261,8 +261,14 @@ export function SiteFooter({
                     )}
                 </div>
 
+                {/* Botão Área do Profissional - Destacado */}
+                <ProfessionalAreaButton
+                    primaryColor={primaryColor}
+                    loginUrl={`${process.env.NEXT_PUBLIC_APP_URL || 'https://psicosites.com.br'}/login`}
+                />
+
                 {/* Linha inferior: Copyright, Políticas, Crédito */}
-                <div className="border-t border-gray-800 mt-10 pt-8">
+                <div className="border-t border-gray-800 mt-6 pt-6">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                         {/* Copyright */}
                         <p className="text-gray-500 text-sm">
@@ -299,12 +305,6 @@ export function SiteFooter({
                         </a>
                     </div>
                 </div>
-
-                {/* Botão Área do Profissional - Destacado */}
-                <ProfessionalAreaButton
-                    primaryColor={primaryColor}
-                    loginUrl={`${process.env.NEXT_PUBLIC_APP_URL || 'https://psicosites.com.br'}/login`}
-                />
             </div>
 
             {/* Certificado CFP */}
