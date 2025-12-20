@@ -13,10 +13,6 @@ import {
     SiteTestimonialsSection,
     SiteFAQSection,
 } from "@/components/site/sections";
-import { SiteVideoSection } from "@/components/site/sections/site-video";
-import { SiteCertificationsSection } from "@/components/site/sections/site-certifications";
-import { SitePricingSection } from "@/components/site/sections/site-pricing";
-import { SiteInfoSection } from "@/components/site/sections/site-info";
 
 interface SitePageProps {
     params: Promise<{ subdomain: string }>;
@@ -160,9 +156,6 @@ export default async function SiteHomePage({ params }: SitePageProps) {
             {/* Hero Section */}
             <SiteHeroSection profile={profile} primaryColor={primaryColor} />
 
-            {/* Vídeo de Apresentação (opcional) */}
-            <SiteVideoSection profile={profile} primaryColor={primaryColor} />
-
             {/* Sobre Section */}
             <SiteAboutSection
                 bio={profile?.bio}
@@ -176,15 +169,6 @@ export default async function SiteHomePage({ params }: SitePageProps) {
                 specialtiesData={profile?.specialties_data as SiteSpecialty[]}
                 primaryColor={primaryColor}
             />
-
-            {/* Informações do Atendimento (horários, idiomas, público-alvo, metodologias) */}
-            <SiteInfoSection profile={profile} primaryColor={primaryColor} />
-
-            {/* Certificações e Formações (opcional) */}
-            <SiteCertificationsSection profile={profile} primaryColor={primaryColor} />
-
-            {/* Preços/Valores (opcional) */}
-            <SitePricingSection profile={profile} primaryColor={primaryColor} />
 
             {/* Modalidades de Atendimento */}
             <SiteModalitiesSection

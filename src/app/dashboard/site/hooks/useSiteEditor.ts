@@ -37,14 +37,6 @@ export interface SeoData {
     meta_description: string;
 }
 
-export interface ExtrasData {
-    video_url: string;
-    working_hours: string;
-    languages: string;
-    target_audience: string;
-    methodologies: string;
-}
-
 export interface SocialLinks {
     instagram?: string;
     linkedin?: string;
@@ -54,19 +46,7 @@ export interface SocialLinks {
     twitter?: string; // X
 }
 
-export interface Certification {
-    title: string;
-    institution: string;
-    year?: string;
-}
-
-export interface PricingItem {
-    service: string;
-    price: string;
-    duration?: string;
-}
-
-export type TabId = "profile" | "attendance" | "specialties" | "theme" | "seo" | "faq" | "testimonials" | "extras";
+export type TabId = "profile" | "attendance" | "specialties" | "theme" | "seo" | "faq" | "testimonials";
 
 // Função para remover tags HTML de uma string
 function stripHtml(html: string): string {
@@ -96,13 +76,6 @@ interface UseSiteEditorProps {
         logo_url?: string;
         specialties?: string[];
         specialties_data?: Specialty[];
-        video_url?: string;
-        working_hours?: string;
-        languages?: string[];
-        target_audience?: string[];
-        methodologies?: string[];
-        certifications?: Certification[];
-        pricing?: PricingItem[];
         social_links?: SocialLinks;
     };
     site: {
@@ -169,14 +142,6 @@ export function useSiteEditor({ profile, site }: UseSiteEditorProps) {
 
     const [isPublished, setIsPublished] = useState(site.is_published);
 
-    const [extrasData, setExtrasData] = useState<ExtrasData>({
-        video_url: profile.video_url || "",
-        working_hours: profile.working_hours || "",
-        languages: (profile.languages || []).join(", "),
-        target_audience: (profile.target_audience || []).join(", "),
-        methodologies: (profile.methodologies || []).join(", "),
-    });
-
     const [socialLinks, setSocialLinks] = useState<SocialLinks>({
         instagram: profile.social_links?.instagram || "",
         linkedin: profile.social_links?.linkedin || "",
@@ -185,13 +150,6 @@ export function useSiteEditor({ profile, site }: UseSiteEditorProps) {
         tiktok: profile.social_links?.tiktok || "",
         twitter: profile.social_links?.twitter || "",
     });
-
-    const [certifications, setCertifications] = useState<Certification[]>(
-        profile.certifications || []
-    );
-    const [pricing, setPricing] = useState<PricingItem[]>(
-        profile.pricing || []
-    );
 
     // Helper para mostrar mensagem de sucesso temporária
     const showSuccess = (message: string) => {
@@ -285,28 +243,6 @@ export function useSiteEditor({ profile, site }: UseSiteEditorProps) {
         });
     };
 
-    const handleSaveExtras = () => {
-        setError(null);
-        setSuccess(null);
-        startTransition(async () => {
-            const dataToSave = {
-                video_url: extrasData.video_url || null,
-                working_hours: extrasData.working_hours || null,
-                languages: extrasData.languages ? extrasData.languages.split(",").map(s => s.trim()).filter(Boolean) : [],
-                target_audience: extrasData.target_audience ? extrasData.target_audience.split(",").map(s => s.trim()).filter(Boolean) : [],
-                methodologies: extrasData.methodologies ? extrasData.methodologies.split(",").map(s => s.trim()).filter(Boolean) : [],
-                certifications: certifications,
-                pricing: pricing,
-            };
-            const result = await updateProfile(profile.id, dataToSave);
-            if (result.error) {
-                setError(result.error);
-            } else {
-                showSuccess("Informações extras salvas com sucesso!");
-            }
-        });
-    };
-
     const handleSaveSocialLinks = () => {
         setError(null);
         setSuccess(null);
@@ -349,12 +285,6 @@ export function useSiteEditor({ profile, site }: UseSiteEditorProps) {
         specialties,
         setSpecialties,
         isPublished,
-        extrasData,
-        setExtrasData,
-        certifications,
-        setCertifications,
-        pricing,
-        setPricing,
         socialLinks,
         setSocialLinks,
 
@@ -365,7 +295,6 @@ export function useSiteEditor({ profile, site }: UseSiteEditorProps) {
         handleSaveSeo,
         handleTogglePublish,
         handleSaveSpecialties,
-        handleSaveExtras,
         handleSaveSocialLinks,
 
         // IDs

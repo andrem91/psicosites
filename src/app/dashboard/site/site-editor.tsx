@@ -8,7 +8,7 @@ import { Specialty } from "@/types/specialty";
 
 // Hook e componentes de aba
 import { useSiteEditor, TabId } from "./hooks/useSiteEditor";
-import { ProfileTab, AttendanceTab, ThemeTab, SeoTab, ExtrasTab } from "./tabs";
+import { ProfileTab, AttendanceTab, ThemeTab, SeoTab } from "./tabs";
 
 // Tipos para o componente principal
 export interface SiteEditorProps {
@@ -33,13 +33,6 @@ export interface SiteEditorProps {
         google_maps_embed?: string;
         profile_image_url?: string;
         logo_url?: string;
-        video_url?: string;
-        working_hours?: string;
-        languages?: string[];
-        target_audience?: string[];
-        methodologies?: string[];
-        certifications?: { title: string; institution: string; year?: string }[];
-        pricing?: { service: string; price: string; duration?: string }[];
         social_links?: {
             instagram?: string;
             linkedin?: string;
@@ -76,7 +69,6 @@ const TABS: { id: TabId; label: string }[] = [
     { id: "seo", label: "SEO" },
     { id: "faq", label: "FAQ" },
     { id: "testimonials", label: "Depoimentos" },
-    { id: "extras", label: "Extras" },
 ];
 
 export function SiteEditor({ profile, site }: SiteEditorProps) {
@@ -195,9 +187,6 @@ export function SiteEditor({ profile, site }: SiteEditorProps) {
 
                     {/* Tab Depoimentos */}
                     {activeTab === "testimonials" && <TestimonialsEditor siteId={siteId} />}
-
-                    {/* Tab Extras */}
-                    {activeTab === "extras" && <ExtrasTab editor={editor} />}
                 </div>
             </div>
         </div>

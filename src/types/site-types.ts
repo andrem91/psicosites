@@ -31,28 +31,6 @@ export interface SiteProfile {
         tiktok?: string;
         twitter?: string;
     };
-    // Novos campos opcionais
-    video_url?: string;
-    working_hours?: string;
-    languages?: string[];
-    target_audience?: string[];
-    methodologies?: string[];
-    certifications?: SiteCertification[];
-    pricing?: SitePricingItem[];
-}
-
-// Certificação/Formação
-export interface SiteCertification {
-    title: string;
-    institution: string;
-    year?: string;
-}
-
-// Item de Preço
-export interface SitePricingItem {
-    service: string;
-    price: string;
-    duration?: string;
 }
 
 export interface SocialLink {
