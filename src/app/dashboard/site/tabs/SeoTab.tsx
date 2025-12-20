@@ -21,7 +21,7 @@ export function SeoTab({ editor }: SeoTabProps) {
         <div className="space-y-6">
             <Input
                 label="Título do site (SEO)"
-                placeholder="Ex: Dr. João Silva - Psicólogo"
+                placeholder="Ex: João Silva - Psicólogo"
                 value={seoData.site_title}
                 onChange={(e) =>
                     setSeoData({ ...seoData, site_title: e.target.value })

@@ -33,7 +33,7 @@ export function PreviewSection() {
                                 <div>
                                     <p className="text-indigo-600 font-medium mb-2">CRP 06/123456</p>
                                     <h3 className="text-3xl font-bold text-gray-900 mb-4">
-                                        Dra. Maria Silva
+                                        Maria Silva
                                     </h3>
                                     <p className="text-gray-600 mb-4">
                                         Psicóloga Clínica especializada em Terapia Cognitivo-Comportamental (TCC),

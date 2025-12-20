@@ -63,20 +63,11 @@ export function getGreeting(): string {
 }
 
 /**
- * Monta a saudação completa com gênero
- * Ex: "Bom dia, Dra. Maria!"
+ * Monta a saudação completa com nome
+ * Ex: "Bom dia, Maria!"
  */
-export function getPersonalizedGreeting(name: string, gender?: string): string {
+export function getPersonalizedGreeting(name: string, _gender?: string): string {
     const greeting = getGreeting();
     const firstName = name.split(" ")[0];
-
-    // Prefixo baseado no gênero
-    let prefix = "";
-    if (gender === "female") {
-        prefix = "Dra. ";
-    } else if (gender === "male") {
-        prefix = "Dr. ";
-    }
-
-    return `${greeting}, ${prefix}${firstName}!`;
+    return `${greeting}, ${firstName}!`;
 }
