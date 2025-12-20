@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { formatPhone } from "@/lib/phone-format";
 import type { SocialLink } from "@/types/site-types";
+import { ProfessionalAreaButton } from "./professional-area-button";
 
 interface SiteFooterProps {
     siteName: string;
@@ -300,33 +301,10 @@ export function SiteFooter({
                 </div>
 
                 {/* Botão Área do Profissional - Destacado */}
-                <div className="border-t border-gray-800 mt-6 pt-6 text-center">
-                    <p className="text-gray-500 text-sm mb-3">
-                        É o profissional deste site?
-                    </p>
-                    <a
-                        href={`${process.env.NEXT_PUBLIC_APP_URL || 'https://psicosites.com.br'}/login`}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all hover:scale-105"
-                        style={{
-                            border: `2px solid ${primaryColor}`,
-                            color: primaryColor,
-                            backgroundColor: 'transparent',
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = primaryColor;
-                            e.currentTarget.style.color = 'white';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = 'transparent';
-                            e.currentTarget.style.color = primaryColor;
-                        }}
-                    >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                        Área do Profissional
-                    </a>
-                </div>
+                <ProfessionalAreaButton
+                    primaryColor={primaryColor}
+                    loginUrl={`${process.env.NEXT_PUBLIC_APP_URL || 'https://psicosites.com.br'}/login`}
+                />
             </div>
 
             {/* Certificado CFP */}
