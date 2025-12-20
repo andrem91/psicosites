@@ -34,7 +34,14 @@ interface ProfileData {
     methodologies?: string[];
     certifications?: { title: string; institution: string; year?: string }[];
     pricing?: { service: string; price: string; duration?: string }[];
-    instagram_url?: string | null;
+    social_links?: {
+        instagram?: string;
+        linkedin?: string;
+        facebook?: string;
+        youtube?: string;
+        tiktok?: string;
+        twitter?: string;
+    };
 }
 
 interface SiteTheme {

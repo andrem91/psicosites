@@ -43,7 +43,15 @@ export interface ExtrasData {
     languages: string;
     target_audience: string;
     methodologies: string;
-    instagram_url: string;
+}
+
+export interface SocialLinks {
+    instagram?: string;
+    linkedin?: string;
+    facebook?: string;
+    youtube?: string;
+    tiktok?: string;
+    twitter?: string; // X
 }
 
 export interface Certification {
@@ -95,7 +103,7 @@ interface UseSiteEditorProps {
         methodologies?: string[];
         certifications?: Certification[];
         pricing?: PricingItem[];
-        instagram_url?: string;
+        social_links?: SocialLinks;
     };
     site: {
         id: string;
@@ -167,7 +175,15 @@ export function useSiteEditor({ profile, site }: UseSiteEditorProps) {
         languages: (profile.languages || []).join(", "),
         target_audience: (profile.target_audience || []).join(", "),
         methodologies: (profile.methodologies || []).join(", "),
-        instagram_url: profile.instagram_url || "",
+    });
+
+    const [socialLinks, setSocialLinks] = useState<SocialLinks>({
+        instagram: profile.social_links?.instagram || "",
+        linkedin: profile.social_links?.linkedin || "",
+        facebook: profile.social_links?.facebook || "",
+        youtube: profile.social_links?.youtube || "",
+        tiktok: profile.social_links?.tiktok || "",
+        twitter: profile.social_links?.twitter || "",
     });
 
     const [certifications, setCertifications] = useState<Certification[]>(
@@ -281,13 +297,27 @@ export function useSiteEditor({ profile, site }: UseSiteEditorProps) {
                 methodologies: extrasData.methodologies ? extrasData.methodologies.split(",").map(s => s.trim()).filter(Boolean) : [],
                 certifications: certifications,
                 pricing: pricing,
-                instagram_url: extrasData.instagram_url || null,
             };
             const result = await updateProfile(profile.id, dataToSave);
             if (result.error) {
                 setError(result.error);
             } else {
                 showSuccess("Informações extras salvas com sucesso!");
+            }
+        });
+    };
+
+    const handleSaveSocialLinks = () => {
+        setError(null);
+        setSuccess(null);
+        startTransition(async () => {
+            const result = await updateProfile(profile.id, {
+                social_links: socialLinks
+            });
+            if (result.error) {
+                setError(result.error);
+            } else {
+                showSuccess("Redes sociais salvas com sucesso!");
             }
         });
     };
@@ -325,6 +355,8 @@ export function useSiteEditor({ profile, site }: UseSiteEditorProps) {
         setCertifications,
         pricing,
         setPricing,
+        socialLinks,
+        setSocialLinks,
 
         // Handlers
         handleSaveProfile,
@@ -334,6 +366,7 @@ export function useSiteEditor({ profile, site }: UseSiteEditorProps) {
         handleTogglePublish,
         handleSaveSpecialties,
         handleSaveExtras,
+        handleSaveSocialLinks,
 
         // IDs
         profileId: profile.id,

@@ -17,7 +17,6 @@ import { SiteVideoSection } from "@/components/site/sections/site-video";
 import { SiteCertificationsSection } from "@/components/site/sections/site-certifications";
 import { SitePricingSection } from "@/components/site/sections/site-pricing";
 import { SiteInfoSection } from "@/components/site/sections/site-info";
-import { FloatingInstagramButton } from "@/components/site/floating-instagram";
 
 interface SitePageProps {
     params: Promise<{ subdomain: string }>;
@@ -165,7 +164,11 @@ export default async function SiteHomePage({ params }: SitePageProps) {
             <SiteVideoSection profile={profile} primaryColor={primaryColor} />
 
             {/* Sobre Section */}
-            <SiteAboutSection bio={profile?.bio} primaryColor={primaryColor} />
+            <SiteAboutSection
+                bio={profile?.bio}
+                primaryColor={primaryColor}
+                socialLinks={profile?.social_links}
+            />
 
             {/* Especialidades */}
             <SiteSpecialtiesSection
@@ -204,12 +207,6 @@ export default async function SiteHomePage({ params }: SitePageProps) {
 
             {/* FAQ */}
             <SiteFAQSection faqs={site.faqs} primaryColor={primaryColor} />
-
-            {/* Botão flutuante Instagram (opcional) */}
-            <FloatingInstagramButton
-                instagramUrl={profile?.instagram_url}
-                primaryColor={primaryColor}
-            />
         </>
     );
 }

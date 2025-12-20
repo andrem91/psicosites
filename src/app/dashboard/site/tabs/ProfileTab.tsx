@@ -24,6 +24,9 @@ export function ProfileTab({ editor }: ProfileTabProps) {
         isPending,
         handleSaveProfile,
         setSuccess,
+        socialLinks,
+        setSocialLinks,
+        handleSaveSocialLinks,
     } = editor;
 
     return (
@@ -117,6 +120,69 @@ export function ProfileTab({ editor }: ProfileTabProps) {
                     }
                     placeholder="Conte mais sobre sua formação, experiência, abordagem terapêutica..."
                 />
+            </div>
+
+            {/* Redes Sociais */}
+            <div className="border-t border-gray-200 pt-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">📱 Redes Sociais</h3>
+                <p className="text-sm text-gray-500 mb-4">
+                    Adicione suas redes sociais para aparecerem no seu site
+                </p>
+                <div className="grid md:grid-cols-2 gap-4">
+                    <Input
+                        label="Instagram"
+                        placeholder="https://instagram.com/seuusuario"
+                        value={socialLinks.instagram}
+                        onChange={(e) =>
+                            setSocialLinks({ ...socialLinks, instagram: e.target.value })
+                        }
+                    />
+                    <Input
+                        label="LinkedIn"
+                        placeholder="https://linkedin.com/in/seuusuario"
+                        value={socialLinks.linkedin}
+                        onChange={(e) =>
+                            setSocialLinks({ ...socialLinks, linkedin: e.target.value })
+                        }
+                    />
+                    <Input
+                        label="Facebook"
+                        placeholder="https://facebook.com/suapagina"
+                        value={socialLinks.facebook}
+                        onChange={(e) =>
+                            setSocialLinks({ ...socialLinks, facebook: e.target.value })
+                        }
+                    />
+                    <Input
+                        label="YouTube"
+                        placeholder="https://youtube.com/@seucanal"
+                        value={socialLinks.youtube}
+                        onChange={(e) =>
+                            setSocialLinks({ ...socialLinks, youtube: e.target.value })
+                        }
+                    />
+                    <Input
+                        label="TikTok"
+                        placeholder="https://tiktok.com/@seuusuario"
+                        value={socialLinks.tiktok}
+                        onChange={(e) =>
+                            setSocialLinks({ ...socialLinks, tiktok: e.target.value })
+                        }
+                    />
+                    <Input
+                        label="X (Twitter)"
+                        placeholder="https://x.com/seuusuario"
+                        value={socialLinks.twitter}
+                        onChange={(e) =>
+                            setSocialLinks({ ...socialLinks, twitter: e.target.value })
+                        }
+                    />
+                </div>
+                <div className="flex justify-end mt-4">
+                    <Button onClick={handleSaveSocialLinks} isLoading={isPending} variant="outline">
+                        Salvar Redes Sociais
+                    </Button>
+                </div>
             </div>
 
             <div className="flex justify-end">

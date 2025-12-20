@@ -40,7 +40,14 @@ export interface SiteEditorProps {
         methodologies?: string[];
         certifications?: { title: string; institution: string; year?: string }[];
         pricing?: { service: string; price: string; duration?: string }[];
-        instagram_url?: string;
+        social_links?: {
+            instagram?: string;
+            linkedin?: string;
+            facebook?: string;
+            youtube?: string;
+            tiktok?: string;
+            twitter?: string;
+        };
     };
     site: {
         id: string;

@@ -136,7 +136,7 @@ export default async function SitePage() {
                     methodologies: profile.methodologies || [],
                     certifications: profile.certifications || [],
                     pricing: profile.pricing || [],
-                    instagram_url: profile.instagram_url || "",
+                    social_links: profile.social_links || {},
                 }}
                 site={{
                     id: site.id,

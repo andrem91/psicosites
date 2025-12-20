@@ -18,7 +18,7 @@ interface InfoCardProps {
 
 function InfoCard({ icon: Icon, title, items, primaryColor }: InfoCardProps) {
     return (
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 w-full sm:w-64">
             <div
                 className="w-10 h-10 rounded-lg flex items-center justify-center mb-3"
                 style={{ backgroundColor: `${primaryColor}20` }}
@@ -71,9 +71,9 @@ export function SiteInfoSection({ profile, primaryColor }: SiteInfoSectionProps)
                     className="text-2xl font-bold text-center mb-8"
                     style={{ color: primaryColor }}
                 >
-                    ℹ️ Informações do Atendimento
+                    Informações do Atendimento
                 </h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="flex flex-wrap justify-center gap-6">
                     {hasWorkingHours && (
                         <InfoCard
                             icon={Clock}
