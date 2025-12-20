@@ -176,7 +176,6 @@
 | Indicador força de senha | Barra visual (zxcvbn) | ⏳ Pendente |
 | Histórico de alterações | Log de quando publicou/editou | ⏳ Pendente |
 | Agendamento de posts | Publicar artigo em data futura | ⏳ Pendente |
-| Limit 3 especialidades Free | Restringir plano gratuito | ⏳ Pendente |
 
 #### Blog
 | Item | Descrição | Status | Ferramenta |
@@ -418,34 +417,33 @@
 
 ### Fase 7 - Monetização (PRIORIDADE PRÉ-LANÇAMENTO)
 
-> **Gateway:** Mercado Pago | **Básico:** R$49/mês | **Pro:** R$79/mês
+> **Gateway:** Mercado Pago | **Modelo:** 2 planos (Grátis + Pro R$47/mês)
+> **Documentação detalhada:** [PLANOS.md](./PLANOS.md)
 
 | Item | Descrição | Status |
 |------|-----------|--------|
-| Arquivo de planos | Constantes e helpers | ⏳ Pendente |
+| Arquivo de planos | Constantes PLANS, FREE_COLORS, PRO_COLORS | ⏳ Pendente |
 | Checkout Mercado Pago | Pix, Boleto, Cartão | ⏳ Pendente |
-| Webhooks | Atualização de status | ⏳ Pendente |
-| Restrições por plano | Verificar features pagas | ⏳ Pendente |
+| Webhooks | Atualização de status de pagamento | ⏳ Pendente |
+| Verificações por plano | isPro checks no código | ⏳ Pendente |
 | UI de upgrade | Modal incentivando upgrade | ⏳ Pendente |
 | Gestão de assinaturas | Ver/cancelar no dashboard | ⏳ Pendente |
-| Cupons de desconto | Aplicar desconto | ⏳ Pendente |
+| Badge dinâmico | Destacado (grátis) vs discreto (Pro) | ⏳ Pendente |
 
-### Features Premium (por Plano)
+### Comparativo de Planos (Grátis vs Pro)
 
-| Recurso | Gratuito | Básico (R$49) | Pro (R$79) |
-|---------|----------|---------------|------------|
-| Site + subdomínio | ✅ | ✅ | ✅ |
-| Domínio próprio | ❌ | ✅ | ✅ |
-| Blog | ⚠️ 3 posts | ✅ Ilimitado | ✅ Ilimitado |
-| Estatísticas | ❌ | ✅ | ✅ |
-| Remover "by PsicoSites" | ❌ | ❌ | ✅ |
-| Fontes premium | ❌ | ✅ | ✅ |
-| Vídeo de apresentação | ❌ | ✅ | ✅ |
-| Google Analytics próprio | ❌ | ✅ | ✅ |
-| Export estatísticas CSV | ❌ | ❌ | ✅ |
-| Agendamento de posts | ❌ | ❌ | ✅ |
-| Múltiplos idiomas | ❌ | ❌ | ✅ |
-| Suporte prioritário | ❌ | ❌ | ✅ |
+| Recurso | Grátis (R$0) | Pro (R$47/mês) |
+|---------|--------------|----------------|
+| Site completo | ✅ | ✅ |
+| Domínio | Subdomínio | Próprio |
+| Cores | 3 (Azul, Verde, Roxo) | 8 (todas) |
+| Fontes | 2 presets | 5+ presets |
+| Depoimentos | Até 3 | Ilimitados |
+| Blog | Até 3 posts | Ilimitado |
+| Vídeo no Hero | ❌ | ✅ |
+| Badge "Feito com PsicoSites" | ✨ Destacado | Discreto |
+| Estatísticas | Básicas | Avançadas |
+| Suporte | Normal | Prioritário |
 
 ### Fase 8 - Beta Program
 
