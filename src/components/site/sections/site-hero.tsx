@@ -26,7 +26,7 @@ export function SiteHeroSection({ profile, primaryColor }: SiteHeroProps) {
     const professionalLabel = getProfessionalLabel(profile);
 
     return (
-        <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-white">
+        <section id="inicio" className="relative min-h-[85vh] flex items-center overflow-hidden bg-white">
             {/* Fundo limpo */}
             <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white" />
 

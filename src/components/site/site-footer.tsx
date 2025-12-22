@@ -128,29 +128,29 @@ export function SiteFooter({
                         </h3>
                         <ul className="space-y-3 text-gray-400 text-sm">
                             <li>
-                                <Link href="/" className="hover:text-white transition-colors">
+                                <Link href="#inicio" className="hover:text-white transition-colors">
                                     Início
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/#sobre" className="hover:text-white transition-colors">
+                                <Link href="#sobre" className="hover:text-white transition-colors">
                                     Sobre
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/#especialidades" className="hover:text-white transition-colors">
+                                <Link href="#especialidades" className="hover:text-white transition-colors">
                                     Especialidades
                                 </Link>
                             </li>
                             {showBlog && (
                                 <li>
-                                    <Link href="/blog" className="hover:text-white transition-colors">
+                                    <Link href="./blog" className="hover:text-white transition-colors">
                                         Blog
                                     </Link>
                                 </li>
                             )}
                             <li>
-                                <Link href="/#contato" className="hover:text-white transition-colors">
+                                <Link href="#contato" className="hover:text-white transition-colors">
                                     Contato
                                 </Link>
                             </li>
@@ -309,8 +309,8 @@ export function SiteFooter({
                             target="_blank"
                             rel="noopener noreferrer"
                             className={`flex items-center gap-2 transition-colors ${isPro
-                                    ? "text-gray-600 text-xs hover:text-gray-500"
-                                    : "text-gray-500 text-sm hover:text-gray-400"
+                                ? "text-gray-600 text-xs hover:text-gray-500"
+                                : "text-gray-500 text-sm hover:text-gray-400"
                                 }`}
                         >
                             {isPro ? (

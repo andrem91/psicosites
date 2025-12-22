@@ -83,11 +83,11 @@ export default async function SiteLayout({ children, params }: SiteLayoutProps) 
                     primaryColor={primaryColor}
                     fontPreset={fontPreset}
                     navItems={[
-                        { label: "Início", href: "/" },
-                        { label: "Sobre", href: "/#sobre" },
-                        { label: "Especialidades", href: "/#especialidades" },
-                        ...(site.show_blog !== false ? [{ label: "Blog", href: "/blog" }] : []),
-                        { label: "Contato", href: "/#contato" },
+                        { label: "Início", href: "#inicio" },
+                        { label: "Sobre", href: "#sobre" },
+                        { label: "Especialidades", href: "#especialidades" },
+                        ...(site.show_blog !== false ? [{ label: "Blog", href: "./blog" }] : []),
+                        { label: "Contato", href: "#contato" },
                     ]}
                 />
 
