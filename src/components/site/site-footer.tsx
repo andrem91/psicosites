@@ -29,6 +29,8 @@ interface SiteFooterProps {
     city?: string;
     state?: string;
     showBlog?: boolean;
+    // Plano do usuário
+    isPro?: boolean;
 }
 
 // Ícones das redes sociais
@@ -98,6 +100,7 @@ export function SiteFooter({
     city,
     state,
     showBlog = true,
+    isPro = false,
 }: SiteFooterProps) {
     const currentYear = new Date().getFullYear();
 
@@ -300,20 +303,31 @@ export function SiteFooter({
                             </div>
                         )}
 
-                        {/* Badge PsicoSites */}
+                        {/* Badge PsicoSites - Dinâmico por plano */}
                         <a
                             href="https://psicosites.com.br"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-gray-500 text-xs hover:text-gray-400 transition-colors"
+                            className={`flex items-center gap-2 transition-colors ${isPro
+                                    ? "text-gray-600 text-xs hover:text-gray-500"
+                                    : "text-gray-500 text-sm hover:text-gray-400"
+                                }`}
                         >
-                            <span>Desenvolvido por</span>
-                            <span
-                                className="font-semibold px-2 py-1 rounded"
-                                style={{ backgroundColor: primaryColor + "20", color: primaryColor }}
-                            >
-                                PsicoSites
-                            </span>
+                            {isPro ? (
+                                // Badge discreto para Pro
+                                <span className="text-gray-500">Feito com PsicoSites</span>
+                            ) : (
+                                // Badge destacado para Free
+                                <>
+                                    <span>✨</span>
+                                    <span
+                                        className="font-semibold px-2 py-1 rounded"
+                                        style={{ backgroundColor: primaryColor + "20", color: primaryColor }}
+                                    >
+                                        Feito com PsicoSites
+                                    </span>
+                                </>
+                            )}
                         </a>
                     </div>
                 </div>

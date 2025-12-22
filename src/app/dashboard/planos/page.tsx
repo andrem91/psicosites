@@ -22,10 +22,15 @@ export default async function PlanosPage() {
         .single();
 
     const currentPlan = subscription?.plan || "free";
+    const subscriptionStatus = subscription?.status || "active";
 
     return (
         <div className="p-6 md:p-10">
-            <PlansPageClient currentPlan={currentPlan} />
+            <PlansPageClient
+                currentPlan={currentPlan}
+                subscriptionStatus={subscriptionStatus}
+            />
         </div>
     );
 }
+

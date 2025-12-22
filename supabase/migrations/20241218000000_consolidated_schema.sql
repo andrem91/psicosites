@@ -7,18 +7,14 @@
 --         faqs, testimonials, storage, specialties_data, show_blog
 --
 -- NOTA: Políticas RLS otimizadas com (select auth.uid())
+-- NOTA: Usando gen_random_uuid() nativo do PostgreSQL 13+
 -- =============================================
-
--- ======================
--- EXTENSÕES
--- ======================
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- ======================
 -- TABELA: PROFILES
 -- ======================
 CREATE TABLE IF NOT EXISTS profiles (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL UNIQUE,
     full_name TEXT NOT NULL DEFAULT '',
     email TEXT NOT NULL DEFAULT '',
@@ -56,7 +52,7 @@ CREATE INDEX IF NOT EXISTS idx_profiles_social_links ON profiles USING GIN (soci
 -- TABELA: SITES
 -- ======================
 CREATE TABLE IF NOT EXISTS sites (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     profile_id UUID REFERENCES profiles(id) ON DELETE CASCADE NOT NULL UNIQUE,
     subdomain TEXT UNIQUE NOT NULL,
     custom_domain TEXT UNIQUE,
@@ -81,7 +77,7 @@ CREATE INDEX IF NOT EXISTS idx_sites_custom_domain ON sites(custom_domain);
 -- TABELA: SUBSCRIPTIONS
 -- ======================
 CREATE TABLE IF NOT EXISTS subscriptions (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL UNIQUE,
     plan TEXT NOT NULL DEFAULT 'free' CHECK (plan IN ('free', 'pro', 'enterprise')),
     status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'inactive', 'pending', 'cancelled')),
@@ -99,7 +95,7 @@ CREATE INDEX IF NOT EXISTS idx_subscriptions_user_id ON subscriptions(user_id);
 -- TABELA: SITE_ANALYTICS
 -- ======================
 CREATE TABLE IF NOT EXISTS site_analytics (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     site_id UUID REFERENCES sites(id) ON DELETE CASCADE NOT NULL,
     date DATE NOT NULL DEFAULT CURRENT_DATE,
     page_views INTEGER DEFAULT 0,
@@ -117,7 +113,7 @@ CREATE INDEX IF NOT EXISTS idx_site_analytics_date ON site_analytics(date);
 -- TABELA: SITE_REFERRERS
 -- ======================
 CREATE TABLE IF NOT EXISTS site_referrers (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     site_id UUID REFERENCES sites(id) ON DELETE CASCADE NOT NULL,
     referrer_source TEXT NOT NULL,
     visit_count INTEGER DEFAULT 1,
@@ -132,7 +128,7 @@ CREATE INDEX IF NOT EXISTS idx_site_referrers_site_id ON site_referrers(site_id)
 -- TABELA: BLOG_POSTS
 -- ======================
 CREATE TABLE IF NOT EXISTS blog_posts (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     site_id UUID REFERENCES sites(id) ON DELETE CASCADE NOT NULL,
     title TEXT NOT NULL,
     slug TEXT NOT NULL,
@@ -153,7 +149,7 @@ CREATE INDEX IF NOT EXISTS idx_blog_posts_slug ON blog_posts(slug);
 -- TABELA: SITE_FAQS
 -- ======================
 CREATE TABLE IF NOT EXISTS site_faqs (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     site_id UUID REFERENCES sites(id) ON DELETE CASCADE NOT NULL,
     question TEXT NOT NULL,
     answer TEXT NOT NULL,
@@ -169,7 +165,7 @@ CREATE INDEX IF NOT EXISTS idx_site_faqs_site_id ON site_faqs(site_id);
 -- TABELA: SITE_TESTIMONIALS
 -- ======================
 CREATE TABLE IF NOT EXISTS site_testimonials (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     site_id UUID REFERENCES sites(id) ON DELETE CASCADE NOT NULL,
     author_name TEXT NOT NULL,
     author_initials TEXT NOT NULL,
