@@ -1,12 +1,12 @@
 /**
  * Webhook: Notificações do Mercado Pago
  * POST /api/webhooks/mercadopago
- * 
+ *
  * Processa eventos de assinatura (subscription_preapproval) e pagamentos
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import {
     preApproval,
     payment,
@@ -16,10 +16,18 @@ import {
 } from "@/lib/mercadopago";
 
 // Cliente Supabase com service role para operações admin
-const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+// Inicialização lazy para evitar erro durante build (variáveis não disponíveis)
+let supabaseAdmin: SupabaseClient | null = null;
+
+function getSupabaseAdmin(): SupabaseClient {
+    if (!supabaseAdmin) {
+        supabaseAdmin = createClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.SUPABASE_SERVICE_ROLE_KEY!
+        );
+    }
+    return supabaseAdmin;
+}
 
 export async function POST(request: NextRequest) {
     try {
@@ -91,7 +99,8 @@ async function handleSubscriptionEvent(subscriptionId: string, action: string) {
         });
 
         // Atualizar assinatura no banco
-        const { error } = await supabaseAdmin
+        const db = getSupabaseAdmin();
+        const { error } = await db
             .from("subscriptions")
             .update({
                 plan: mappedStatus.plan,
@@ -152,7 +161,8 @@ async function handlePaymentEvent(paymentId: string) {
             const nextPeriod = new Date(now);
             nextPeriod.setMonth(nextPeriod.getMonth() + 1);
 
-            const { error } = await supabaseAdmin
+            const db = getSupabaseAdmin();
+            const { error } = await db
                 .from("subscriptions")
                 .update({
                     plan: "pro",
