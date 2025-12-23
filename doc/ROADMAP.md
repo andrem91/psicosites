@@ -15,7 +15,7 @@
 | **Fase 4 - Polimento** | 🔄 Em andamento | UX, Performance, Correções |
 | **Fase 5 - Admin** | 📋 Planejada | Painel administrativo da plataforma |
 | **Fase 6 - Feedback** | 📋 Planejada | Sistema de feedback e sugestões |
-| **Fase 7 - Monetização** | ⏳ Pré-lançamento | Mercado Pago, Planos funcionais |
+| **Fase 7 - Monetização** | ✅ Concluída | Mercado Pago, Planos funcionais |
 | **Fase 8 - Beta Program** | 📋 Planejada | Pro grátis para testers |
 | **Fase 9 - Diferenciação** | 📋 Planejada | Templates, Domínio Customizado |
 | **Fase 10 - Expansão** | 📋 Planejada | Agenda, Integrações |
@@ -415,20 +415,17 @@
 
 ## ⏳ Futuro (Pós-MVP)
 
-### Fase 7 - Monetização (PRIORIDADE PRÉ-LANÇAMENTO)
+### Fase 7 - Monetização ✅ CONCLUÍDA
 
 > **Gateway:** Mercado Pago | **Modelo:** 2 planos (Grátis + Pro R$47/mês)
-> **Documentação detalhada:** [PLANOS.md](./PLANOS.md)
 
 | Item | Descrição | Status |
 |------|-----------|--------|
-| Arquivo de planos | Constantes PLANS, FREE_COLORS, PRO_COLORS | ⏳ Pendente |
-| Checkout Mercado Pago | Pix, Boleto, Cartão | ⏳ Pendente |
-| Webhooks | Atualização de status de pagamento | ⏳ Pendente |
+| Checkout Mercado Pago | Assinaturas recorrentes | ✅ Concluído |
+| Webhooks | Atualização de status de pagamento | ✅ Concluído |
+| Indicador de plano | Badge Free/Pro no dashboard | ✅ Concluído |
 | Verificações por plano | isPro checks no código | ⏳ Pendente |
-| UI de upgrade | Modal incentivando upgrade | ⏳ Pendente |
-| Gestão de assinaturas | Ver/cancelar no dashboard | ⏳ Pendente |
-| Badge dinâmico | Destacado (grátis) vs discreto (Pro) | ⏳ Pendente |
+| Badge dinâmico no site | Destacado (grátis) vs discreto (Pro) | ⏳ Pendente |
 
 ### Comparativo de Planos (Grátis vs Pro)
 
