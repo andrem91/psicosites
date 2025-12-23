@@ -9,7 +9,7 @@
 | Item | Valor |
 |------|-------|
 | **Duração** | 3 meses |
-| **Plano oferecido** | Pro (R$47/mês) grátis |
+| **Plano oferecido** | Pro (R$79/mês) grátis |
 | **Quantidade** | 30-50 psicólogos |
 | **Requisitos** | Feedback + depoimento |
 
