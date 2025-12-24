@@ -1,6 +1,6 @@
 # 🛡️ Módulo Admin - Plano de Implementação Técnico
 
-**Última atualização:** Janeiro/2026  
+**Última atualização:** Dezembro/2024  
 **Autor:** PsicoSites Team  
 **Prioridade:** Alta
 
@@ -9,11 +9,12 @@
 ## 📋 Índice
 
 1. [Visão Geral](#visão-geral)
-2. [Arquitetura](#arquitetura)
-3. [Banco de Dados](#banco-de-dados)
-4. [Fases de Implementação](#fases-de-implementação)
-5. [Segurança](#segurança)
-6. [Estrutura de Arquivos](#estrutura-de-arquivos)
+2. [Quantidade de Telas](#quantidade-de-telas)
+3. [Arquitetura](#arquitetura)
+4. [Banco de Dados](#banco-de-dados)
+5. [Fases de Implementação](#fases-de-implementação)
+6. [Segurança](#segurança)
+7. [Estrutura de Arquivos](#estrutura-de-arquivos)
 
 ---
 
@@ -32,6 +33,43 @@ O módulo Admin é uma área restrita da plataforma para administradores gerenci
 - URL: `/admin/*`
 - Acesso restrito via role `admin` ou `super_admin`
 - Autenticação obrigatória
+
+---
+
+## 📊 Quantidade de Telas
+
+A plataforma **PsicoSites** possui **23 telas principais**:
+
+### 1. Institucional & Acesso (5 Telas)
+1. **Landing Page** - Página de vendas
+2. **Página de Preços** - Comparativo de planos
+3. **Login** - Entrada (Supabase Auth)
+4. **Cadastro** - Registro de nova conta
+5. **Legal** - Termos de Uso e Privacidade
+
+### 2. Painel do Psicólogo (10 Telas)
+6. **Onboarding (Wizard)** - Passo-a-passo inicial gamificado
+7. **Dashboard (Home)** - Visão geral com métricas
+8. **Editor de Site** - Configuração de perfil e preview
+9. **Gestor de Blog** - Listagem de artigos
+10. **Biblioteca de Conteúdo** - Textos prontos
+11. **Planos e Assinatura** - Gestão de subscrição
+12. **Wizard de Domínio** - Tutorial de DNS
+13. **Área de Cobrança** - Faturas e histórico
+14. **Minha Conta** - Configurações pessoais
+15. **Suporte** - Ajuda e tutoriais
+
+### 3. Site do Psicólogo (4 Telas)
+16. **Home do Site** - Site principal gerado
+17. **Blog (Listagem)** - Artigos publicados
+18. **Post (Leitura)** - Página do artigo
+19. **Erro 404** - Página personalizada
+
+### 4. Backoffice / Admin (4 Telas)
+20. **Dashboard Admin** - Métricas financeiras (MRR)
+21. **Gestão de Usuários** - Lista de clientes
+22. **Gestor da Biblioteca** - Textos modelo
+23. **Monitor de Domínios** - Verificação de DNS
 
 ---
 

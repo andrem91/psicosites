@@ -1,7 +1,7 @@
 # 🗺️ Roadmap - PsicoSites
 
-**Última atualização:** Janeiro/2026  
-**Versão:** 2.6 (Beta Program Added)
+**Última atualização:** Dezembro/2024  
+**Versão:** 2.7 (Documentação Consolidada)
 
 ---
 
@@ -442,6 +442,31 @@
 | Estatísticas | Básicas | Avançadas |
 | Suporte | Normal | Prioritário |
 
+### Paleta de Cores por Plano
+
+#### Grátis (3 cores)
+| Nome | Hex | Sensação |
+|------|-----|----------|
+| Azul Índigo | #6366f1 | Confiança, profissionalismo |
+| Verde Esmeralda | #10b981 | Calma, saúde mental |
+| Roxo Violeta | #8b5cf6 | Criatividade, equilíbrio |
+
+#### Pro (+5 cores)
+| Nome | Hex | Sensação |
+|------|-----|----------|
+| Rosa Blush | #ec4899 | Acolhimento, feminino |
+| Terracota | #f97316 | Aconchego, moderno |
+| Teal | #14b8a6 | Sofisticação, calma |
+| Bordô | #be123c | Elegância, intensidade |
+| Grafite | #475569 | Minimalista, sério |
+
+### Badge "Feito com PsicoSites"
+
+| Plano | Estilo | Descrição |
+|-------|--------|----------|
+| Grátis | ✨ Destacado | Fundo colorido, ícone estrela, fonte maior, link clicável |
+| Pro | Discreto | Sem fundo, sem ícone, texto pequeno cinza, link clicável |
+
 ### Fase 8 - Beta Program
 
 > Documentação completa: [BETA_PROGRAM.md](./BETA_PROGRAM.md)
@@ -465,6 +490,23 @@
 | Tutorial | Instruções por registrador |
 | Propagação | Verificação automática |
 | SSL | Certificado via Vercel |
+
+**Guia Técnico de Configuração:**
+
+1. **Middleware (`src/middleware.ts`)** - Já preparado para domínios customizados
+   - Identifica acesso via domínio principal, subdomínio ou domínio externo
+   - Domínio externo reescreve rota para `/site/[dominio-customizado]`
+
+2. **Banco de Dados (Supabase)** - Tabela `sites`
+   - Preencher campo `custom_domain` (ex: `psicoana.com.br`)
+
+3. **Vercel** - Adicionar domínio
+   - Dashboard → Settings → Domains → Adicionar domínio do cliente
+
+4. **DNS do Cliente** - Configurar CNAME
+   - **Tipo**: `CNAME`
+   - **Nome**: `www` ou `@`
+   - **Valor**: `cname.vercel-dns.com`
 
 #### 🎨 Sistema de Templates
 | Template | Descrição |
