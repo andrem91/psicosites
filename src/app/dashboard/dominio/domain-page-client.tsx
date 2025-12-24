@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 
 interface DomainPageClientProps {
@@ -21,8 +20,6 @@ export function DomainPageClient({ site, isPro }: DomainPageClientProps) {
     const [verificationMessage, setVerificationMessage] = useState("");
     const [saveMessage, setSaveMessage] = useState("");
 
-    const supabase = createClient();
-
     const handleSaveDomain = async () => {
         if (!site?.id) return;
 
@@ -30,27 +27,28 @@ export function DomainPageClient({ site, isPro }: DomainPageClientProps) {
         setSaveMessage("");
 
         try {
-            // Limpar domínio (remover http://, www., espaços)
-            let cleanDomain = customDomain
-                .toLowerCase()
-                .trim()
-                .replace(/^https?:\/\//, "")
-                .replace(/^www\./, "")
-                .replace(/\/$/, "");
+            // Chamar API que integra Supabase + Vercel automaticamente
+            const response = await fetch("/api/site/domain", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    siteId: site.id,
+                    domain: customDomain
+                }),
+            });
 
-            const { error } = await supabase
-                .from("sites")
-                .update({ custom_domain: cleanDomain || null })
-                .eq("id", site.id);
+            const data = await response.json();
 
-            if (error) throw error;
+            if (!response.ok) {
+                throw new Error(data.error || "Erro ao salvar domínio");
+            }
 
-            setCustomDomain(cleanDomain);
-            setSaveMessage("Domínio salvo com sucesso! Agora configure o DNS.");
+            setCustomDomain(data.domain || "");
+            setSaveMessage(data.message || "Domínio salvo com sucesso!");
             setVerificationStatus("idle");
         } catch (error) {
             console.error("Erro ao salvar domínio:", error);
-            setSaveMessage("Erro ao salvar domínio. Tente novamente.");
+            setSaveMessage(error instanceof Error ? error.message : "Erro ao salvar domínio. Tente novamente.");
         } finally {
             setIsSaving(false);
         }
@@ -64,17 +62,16 @@ export function DomainPageClient({ site, isPro }: DomainPageClientProps) {
         setVerificationMessage("");
 
         try {
-            const response = await fetch("/api/site/verify-domain", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ domain: customDomain }),
+            // Usar nova API que integra com Vercel API (mais precisa)
+            const response = await fetch(`/api/site/domain?domain=${encodeURIComponent(customDomain)}`, {
+                method: "GET",
             });
 
             const data = await response.json();
 
             if (data.verified) {
                 setVerificationStatus("success");
-                setVerificationMessage("DNS configurado corretamente! Seu domínio está funcionando.");
+                setVerificationMessage(data.message || "DNS configurado corretamente! Seu domínio está funcionando.");
             } else {
                 setVerificationStatus("error");
                 setVerificationMessage(data.message || "DNS ainda não propagou. Aguarde até 48h e tente novamente.");
@@ -94,16 +91,25 @@ export function DomainPageClient({ site, isPro }: DomainPageClientProps) {
 
         setIsSaving(true);
         try {
-            await supabase
-                .from("sites")
-                .update({ custom_domain: null })
-                .eq("id", site.id);
+            // Usar nova API que remove do Vercel + Supabase
+            const response = await fetch("/api/site/domain", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ siteId: site.id }),
+            });
 
-            setCustomDomain("");
-            setVerificationStatus("idle");
-            setSaveMessage("Domínio removido.");
+            const data = await response.json();
+
+            if (response.ok) {
+                setCustomDomain("");
+                setVerificationStatus("idle");
+                setSaveMessage(data.message || "Domínio removido.");
+            } else {
+                throw new Error(data.error);
+            }
         } catch (error) {
             console.error("Erro ao remover domínio:", error);
+            setSaveMessage(error instanceof Error ? error.message : "Erro ao remover domínio.");
         } finally {
             setIsSaving(false);
         }
