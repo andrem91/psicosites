@@ -315,13 +315,47 @@ export function DomainPageClient({ site, isPro }: DomainPageClientProps) {
                         </p>
                     </div>
 
-                    {/* Dica Registro.br */}
-                    <div className="bg-green-50 rounded-xl p-4 border border-green-200">
-                        <p className="font-medium text-green-900 mb-2">🇧🇷 Dica para Registro.br</p>
-                        <p className="text-green-800 text-sm">
-                            No Registro.br, vá em <strong>Domínio → DNS → Alterar servidores DNS</strong>.
-                            Apague os servidores atuais e cole os dois novos acima.
-                        </p>
+                    {/* Tutorial visual Registro.br */}
+                    <div className="bg-green-50 rounded-xl p-5 border border-green-200">
+                        <div className="flex items-center gap-2 mb-4">
+                            <span className="text-2xl">🇧🇷</span>
+                            <p className="font-semibold text-green-900 text-base">Tutorial para Registro.br</p>
+                        </div>
+
+                        <div className="space-y-4">
+                            <div className="bg-white rounded-lg p-4">
+                                <p className="font-medium text-green-800 mb-2">1. Acesse o Registro.br e faça login</p>
+                                <p className="text-green-700 text-sm">Vá em <a href="https://registro.br" target="_blank" rel="noopener noreferrer" className="underline font-medium">registro.br</a> e entre com sua conta.</p>
+                            </div>
+
+                            <div className="bg-white rounded-lg p-4">
+                                <p className="font-medium text-green-800 mb-2">2. Clique no seu domínio</p>
+                                <p className="text-green-700 text-sm">Encontre o domínio que deseja configurar e clique nele.</p>
+                            </div>
+
+                            <div className="bg-white rounded-lg p-4">
+                                <p className="font-medium text-green-800 mb-3">3. Na seção DNS, clique em &quot;Alterar servidores DNS&quot;</p>
+                                <img
+                                    src="/images/tutorial-registrobr-dns.png"
+                                    alt="Tela do Registro.br mostrando onde clicar em Alterar servidores DNS"
+                                    className="rounded-lg border border-green-200 w-full"
+                                />
+                            </div>
+
+                            <div className="bg-white rounded-lg p-4">
+                                <p className="font-medium text-green-800 mb-2">4. Preencha os servidores</p>
+                                <p className="text-green-700 text-sm mb-2">Apague os valores antigos e cole:</p>
+                                <div className="bg-green-100 rounded p-3 font-mono text-sm space-y-1">
+                                    <p><span className="text-green-600">Servidor 1:</span> <span className="select-all font-bold">ns1.vercel-dns.com</span></p>
+                                    <p><span className="text-green-600">Servidor 2:</span> <span className="select-all font-bold">ns2.vercel-dns.com</span></p>
+                                </div>
+                            </div>
+
+                            <div className="bg-white rounded-lg p-4">
+                                <p className="font-medium text-green-800 mb-2">5. Clique em &quot;Salvar alterações&quot;</p>
+                                <p className="text-green-700 text-sm">Pronto! Aguarde de 15 minutos a 24 horas para ativar.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -329,32 +363,46 @@ export function DomainPageClient({ site, isPro }: DomainPageClientProps) {
 
             {/* Onde comprar domínio */}
             <div className="bg-gray-50 rounded-2xl border border-gray-200 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">💡 Onde comprar um domínio?</h3>
-                <p className="text-gray-600 mb-4">
-                    Ainda não tem um domínio? Veja alguns registradores populares:
-                </p>
-                <ul className="space-y-2 text-gray-700">
-                    <li className="flex items-center gap-2">
-                        <span className="text-green-500">•</span>
-                        <strong>Registro.br</strong> - Oficial para domínios .com.br (recomendado)
-                    </li>
-                    <li className="flex items-center gap-2">
-                        <span className="text-blue-500">•</span>
-                        <strong>Hostinger</strong> - Opção internacional com bons preços
-                    </li>
-                    <li className="flex items-center gap-2">
-                        <span className="text-orange-500">•</span>
-                        <strong>GoDaddy</strong> - Um dos maiores do mundo
-                    </li>
-                    <li className="flex items-center gap-2">
-                        <span className="text-purple-500">•</span>
-                        <strong>Locaweb</strong> - Empresa brasileira tradicional
-                    </li>
-                </ul>
-                <p className="text-sm text-gray-500 mt-4">
-                    Dica: Para psicólogos no Brasil, recomendamos um domínio .com.br pelo Registro.br.
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">💡 Ainda não tem um domínio?</h3>
+
+                {/* Registro.br destacado */}
+                <div className="bg-white rounded-xl p-4 border-2 border-green-300 mb-4">
+                    <div className="flex items-center gap-3 mb-2">
+                        <span className="text-2xl">🏆</span>
+                        <div>
+                            <p className="font-bold text-gray-900">Registro.br <span className="text-green-600 text-sm font-normal">Recomendado</span></p>
+                            <p className="text-sm text-gray-600">Oficial para domínios .com.br • ~R$40/ano</p>
+                        </div>
+                    </div>
+                    <a
+                        href="https://registro.br"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block mt-2 text-sm text-green-700 font-medium hover:underline"
+                    >
+                        Acessar Registro.br →
+                    </a>
+                </div>
+
+                {/* Outras opções */}
+                <p className="text-sm text-gray-500 mb-3">Outras opções:</p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+                    <a href="https://www.hostinger.com.br/registro-de-dominio" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 hover:underline">
+                        Hostinger
+                    </a>
+                    <a href="https://www.godaddy.com/pt-br" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 hover:underline">
+                        GoDaddy
+                    </a>
+                    <a href="https://www.locaweb.com.br/registro-de-dominio" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 hover:underline">
+                        Locaweb
+                    </a>
+                </div>
+
+                <p className="text-xs text-gray-400 mt-4">
+                    💡 Para psicólogos no Brasil, recomendamos um domínio .com.br - passa mais confiança para seus pacientes.
                 </p>
             </div>
+
         </div>
     );
 }
