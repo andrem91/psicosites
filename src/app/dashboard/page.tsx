@@ -151,7 +151,7 @@ export default async function DashboardPage() {
                         </ul>
                         <Link href="/dashboard/planos">
                             <Button className="bg-white text-orange-600 hover:bg-orange-50 font-semibold">
-                                Assinar Pro por R$29/mês
+                                Assinar Pro por R$47/mês
                             </Button>
                         </Link>
                     </div>
