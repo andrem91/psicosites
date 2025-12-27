@@ -257,152 +257,111 @@ export function DomainPageClient({ site, isPro }: DomainPageClientProps) {
                 </div>
             </div>
 
-            {/* Tutorial DNS */}
-            <div className="bg-blue-50 rounded-2xl border border-blue-100 p-6 mb-6">
-                <h3 className="text-lg font-semibold text-blue-900 mb-4">📋 Como conectar seu domínio</h3>
-
-                <p className="text-blue-700 mb-4">
-                    Siga estes 3 passos simples para seu domínio funcionar:
-                </p>
-
-                <div className="space-y-4 text-sm">
-                    {/* Passo 1 */}
-                    <div className="bg-white rounded-xl p-4">
-                        <div className="flex items-center gap-3 mb-3">
-                            <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">1</span>
-                            <p className="font-medium text-blue-900">Acesse o painel do seu domínio</p>
-                        </div>
-                        <p className="text-blue-700 ml-11">
-                            Entre no site onde você comprou o domínio (Registro.br, Hostinger, GoDaddy, etc.) e faça login.
-                        </p>
-                    </div>
-
-                    {/* Passo 2 */}
-                    <div className="bg-white rounded-xl p-4">
-                        <div className="flex items-center gap-3 mb-3">
-                            <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">2</span>
-                            <p className="font-medium text-blue-900">Altere os servidores de nome (DNS)</p>
-                        </div>
-                        <div className="ml-11">
-                            <p className="text-blue-700 mb-3">
-                                Procure por <strong>&quot;DNS&quot;</strong>, <strong>&quot;Servidores de Nome&quot;</strong> ou <strong>&quot;Nameservers&quot;</strong> e substitua pelos nossos:
-                            </p>
-                            <div className="bg-blue-100 rounded-lg p-4 space-y-2">
-                                <div className="flex items-center gap-2">
-                                    <span className="text-blue-500 font-medium">Servidor 1:</span>
-                                    <code className="bg-white px-3 py-1 rounded font-mono text-blue-800 select-all">ns1.vercel-dns.com</code>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <span className="text-blue-500 font-medium">Servidor 2:</span>
-                                    <code className="bg-white px-3 py-1 rounded font-mono text-blue-800 select-all">ns2.vercel-dns.com</code>
-                                </div>
-                            </div>
-                            <p className="text-blue-600 text-xs mt-2">
-                                💡 Clique nos valores acima para copiar
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Passo 3 */}
-                    <div className="bg-white rounded-xl p-4">
-                        <div className="flex items-center gap-3 mb-3">
-                            <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">3</span>
-                            <p className="font-medium text-blue-900">Aguarde a ativação</p>
-                        </div>
-                        <p className="text-blue-700 ml-11">
-                            Após salvar, aguarde de <strong>15 minutos até 24 horas</strong> para as alterações entrarem em vigor.
-                            Depois, clique em &quot;Verificar DNS&quot; acima para confirmar.
-                        </p>
-                    </div>
-
-                    {/* Tutorial visual Registro.br */}
-                    <div className="bg-green-50 rounded-xl p-5 border border-green-200">
-                        <div className="flex items-center gap-2 mb-4">
-                            <span className="text-2xl">🇧🇷</span>
-                            <p className="font-semibold text-green-900 text-base">Tutorial para Registro.br</p>
-                        </div>
-
-                        <div className="space-y-4">
-                            <div className="bg-white rounded-lg p-4">
-                                <p className="font-medium text-green-800 mb-2">1. Acesse o Registro.br e faça login</p>
-                                <p className="text-green-700 text-sm">Vá em <a href="https://registro.br" target="_blank" rel="noopener noreferrer" className="underline font-medium">registro.br</a> e entre com sua conta.</p>
-                            </div>
-
-                            <div className="bg-white rounded-lg p-4">
-                                <p className="font-medium text-green-800 mb-2">2. Clique no seu domínio</p>
-                                <p className="text-green-700 text-sm">Encontre o domínio que deseja configurar e clique nele.</p>
-                            </div>
-
-                            <div className="bg-white rounded-lg p-4">
-                                <p className="font-medium text-green-800 mb-3">3. Na seção DNS, clique em &quot;Alterar servidores DNS&quot;</p>
-                                <img
-                                    src="/images/tutorial-registrobr-dns.png"
-                                    alt="Tela do Registro.br mostrando onde clicar em Alterar servidores DNS"
-                                    className="rounded-lg border border-green-200 w-full"
-                                />
-                            </div>
-
-                            <div className="bg-white rounded-lg p-4">
-                                <p className="font-medium text-green-800 mb-2">4. Preencha os servidores</p>
-                                <p className="text-green-700 text-sm mb-2">Apague os valores antigos e cole:</p>
-                                <div className="bg-green-100 rounded p-3 font-mono text-sm space-y-1">
-                                    <p><span className="text-green-600">Servidor 1:</span> <span className="select-all font-bold">ns1.vercel-dns.com</span></p>
-                                    <p><span className="text-green-600">Servidor 2:</span> <span className="select-all font-bold">ns2.vercel-dns.com</span></p>
-                                </div>
-                            </div>
-
-                            <div className="bg-white rounded-lg p-4">
-                                <p className="font-medium text-green-800 mb-2">5. Clique em &quot;Salvar alterações&quot;</p>
-                                <p className="text-green-700 text-sm">Pronto! Aguarde de 15 minutos a 24 horas para ativar.</p>
-                            </div>
-                        </div>
+            {/* Tutorial completo Registro.br */}
+            <div className="bg-green-50 rounded-2xl border border-green-200 p-6 mb-6">
+                <div className="flex items-center gap-3 mb-6">
+                    <span className="text-3xl">🇧🇷</span>
+                    <div>
+                        <h3 className="text-lg font-bold text-green-900">Como ter seu domínio próprio</h3>
+                        <p className="text-green-700 text-sm">Tutorial completo usando o Registro.br (recomendado)</p>
                     </div>
                 </div>
-            </div>
 
-
-            {/* Onde comprar domínio */}
-            <div className="bg-gray-50 rounded-2xl border border-gray-200 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">💡 Ainda não tem um domínio?</h3>
-
-                {/* Registro.br destacado */}
-                <div className="bg-white rounded-xl p-4 border-2 border-green-300 mb-4">
-                    <div className="flex items-center gap-3 mb-2">
-                        <span className="text-2xl">🏆</span>
-                        <div>
-                            <p className="font-bold text-gray-900">Registro.br <span className="text-green-600 text-sm font-normal">Recomendado</span></p>
-                            <p className="text-sm text-gray-600">Oficial para domínios .com.br • ~R$40/ano</p>
+                <div className="space-y-4 text-sm">
+                    {/* Passo 1 - Comprar */}
+                    <div className="bg-white rounded-xl p-4">
+                        <div className="flex items-center gap-3 mb-3">
+                            <span className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold text-sm">1</span>
+                            <p className="font-semibold text-green-900">Compre seu domínio no Registro.br</p>
+                        </div>
+                        <div className="ml-11 space-y-2">
+                            <p className="text-green-700">
+                                Acesse <a href="https://registro.br" target="_blank" rel="noopener noreferrer" className="underline font-medium text-green-800">registro.br</a> e
+                                crie uma conta (é grátis). Depois, pesquise o domínio que deseja (ex: <strong>seusite.com.br</strong>) e finalize a compra (~R$40/ano).
+                            </p>
+                            <p className="text-green-600 text-xs">
+                                💡 Domínios .com.br passam mais confiança para pacientes brasileiros
+                            </p>
                         </div>
                     </div>
-                    <a
-                        href="https://registro.br"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block mt-2 text-sm text-green-700 font-medium hover:underline"
-                    >
-                        Acessar Registro.br →
-                    </a>
+
+                    {/* Passo 2 - Acessar */}
+                    <div className="bg-white rounded-xl p-4">
+                        <div className="flex items-center gap-3 mb-3">
+                            <span className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold text-sm">2</span>
+                            <p className="font-semibold text-green-900">Acesse o painel do seu domínio</p>
+                        </div>
+                        <p className="text-green-700 ml-11">
+                            Após a compra, faça login no <a href="https://registro.br" target="_blank" rel="noopener noreferrer" className="underline font-medium text-green-800">registro.br</a> e
+                            clique no domínio que você acabou de comprar.
+                        </p>
+                    </div>
+
+                    {/* Passo 3 - Alterar DNS */}
+                    <div className="bg-white rounded-xl p-4">
+                        <div className="flex items-center gap-3 mb-3">
+                            <span className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold text-sm">3</span>
+                            <p className="font-semibold text-green-900">Clique em &quot;Alterar servidores DNS&quot;</p>
+                        </div>
+                        <div className="ml-11">
+                            <p className="text-green-700 mb-3">Na seção DNS, clique no link indicado na imagem abaixo:</p>
+                            <img
+                                src="/images/tutorial-registrobr-dns.png"
+                                alt="Tela do Registro.br mostrando onde clicar em Alterar servidores DNS"
+                                className="rounded-lg border border-green-300 w-full"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Passo 4 - Preencher */}
+                    <div className="bg-white rounded-xl p-4">
+                        <div className="flex items-center gap-3 mb-3">
+                            <span className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold text-sm">4</span>
+                            <p className="font-semibold text-green-900">Preencha os servidores DNS</p>
+                        </div>
+                        <div className="ml-11">
+                            <p className="text-green-700 mb-3">Apague qualquer valor existente e cole os servidores abaixo:</p>
+                            <div className="bg-green-100 rounded-lg p-4 space-y-3">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                                    <span className="text-green-700 font-medium w-24">Servidor 1:</span>
+                                    <code className="bg-white px-4 py-2 rounded font-mono text-green-900 select-all font-bold">ns1.vercel-dns.com</code>
+                                </div>
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                                    <span className="text-green-700 font-medium w-24">Servidor 2:</span>
+                                    <code className="bg-white px-4 py-2 rounded font-mono text-green-900 select-all font-bold">ns2.vercel-dns.com</code>
+                                </div>
+                            </div>
+                            <p className="text-green-600 text-xs mt-2">
+                                💡 Clique nos valores acima para selecionar e copiar
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Passo 5 - Salvar */}
+                    <div className="bg-white rounded-xl p-4">
+                        <div className="flex items-center gap-3 mb-3">
+                            <span className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold text-sm">5</span>
+                            <p className="font-semibold text-green-900">Salve e aguarde</p>
+                        </div>
+                        <p className="text-green-700 ml-11">
+                            Clique em <strong>&quot;Salvar alterações&quot;</strong> no Registro.br.
+                            Aguarde de <strong>15 minutos a 24 horas</strong> para as alterações serem aplicadas.
+                            Depois, clique em &quot;Verificar DNS&quot; acima para confirmar que está tudo funcionando!
+                        </p>
+                    </div>
                 </div>
 
                 {/* Outras opções */}
-                <p className="text-sm text-gray-500 mb-3">Outras opções:</p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
-                    <a href="https://www.hostinger.com.br/registro-de-dominio" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 hover:underline">
-                        Hostinger
-                    </a>
-                    <a href="https://www.godaddy.com/pt-br" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 hover:underline">
-                        GoDaddy
-                    </a>
-                    <a href="https://www.locaweb.com.br/registro-de-dominio" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 hover:underline">
-                        Locaweb
-                    </a>
+                <div className="mt-6 pt-4 border-t border-green-200">
+                    <p className="text-green-700 text-xs mb-2">Comprou em outro lugar? Sem problema! Os servidores DNS são os mesmos:</p>
+                    <div className="flex flex-wrap gap-3 text-xs">
+                        <a href="https://www.hostinger.com.br" target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline">Hostinger</a>
+                        <a href="https://www.godaddy.com/pt-br" target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline">GoDaddy</a>
+                        <a href="https://www.locaweb.com.br" target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline">Locaweb</a>
+                    </div>
                 </div>
-
-                <p className="text-xs text-gray-400 mt-4">
-                    💡 Para psicólogos no Brasil, recomendamos um domínio .com.br - passa mais confiança para seus pacientes.
-                </p>
             </div>
-
         </div>
     );
 }
+
