@@ -1,7 +1,7 @@
 # 🗺️ Roadmap - PsicoSites
 
 **Última atualização:** Dezembro/2024  
-**Versão:** 2.7 (Documentação Consolidada)
+**Versão:** 2.8 (Domínios Customizados + Dashboard Atualizado)
 
 ---
 
@@ -159,11 +159,12 @@
 #### 🌐 Domínios Customizados (Recomendado)
 | Item | Descrição | Status | Fase |
 |------|-----------|--------|------|
-| UI para custom_domain | Campo no dashboard + instruções DNS | 🟢 Alta | MVP |
-| Middleware multi-domínio | Verificar custom_domain no banco | 🟢 Alta | MVP |
-| Botão afiliado domínios | Link Hostinger/GoDaddy com comissão | 🟢 Alta | MVP |
-| Vercel Domains API | Adicionar domínio automaticamente | 📝 Backlog | v2 |
-| Verificação DNS tempo real | Mostrar status do apontamento | 📝 Backlog | v2 |
+| UI para custom_domain | Campo no dashboard + instruções DNS | ✅ Concluído | MVP |
+| Middleware multi-domínio | Verificar custom_domain no banco | ✅ Concluído | MVP |
+| Botão afiliado domínios | Link Hostinger/GoDaddy com comissão | ✅ Concluído | MVP |
+| Vercel Domains API | Adicionar domínio automaticamente | ✅ Concluído | v2 |
+| Verificação DNS tempo real | Mostrar status do apontamento | ✅ Concluído | v2 |
+| Tutorial visual Registro.br | Passo a passo com screenshot | ✅ Concluído | Extra |
 
 ---
 
